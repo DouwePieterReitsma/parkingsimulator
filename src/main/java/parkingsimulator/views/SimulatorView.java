@@ -1,4 +1,7 @@
-package parkingsimulator;
+package parkingsimulator.views;
+
+import parkingsimulator.models.Car;
+import parkingsimulator.models.Location;
 
 import javax.swing.*;
 import java.awt.*;

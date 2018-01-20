@@ -1,5 +1,11 @@
 package parkingsimulator;
 
+import parkingsimulator.models.AdHocCar;
+import parkingsimulator.models.Car;
+import parkingsimulator.models.Location;
+import parkingsimulator.models.ParkingPassCar;
+import parkingsimulator.views.SimulatorView;
+
 import java.util.Random;
 
 public class Simulator {

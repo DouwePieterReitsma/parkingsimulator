@@ -1,4 +1,4 @@
-package parkingsimulator;
+package parkingsimulator.models;
 
 import java.awt.*;
 

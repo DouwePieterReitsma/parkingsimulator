@@ -1,6 +1,6 @@
-package parkingsimulator;
+package parkingsimulator.models;
 
-public class Location {
+public class Location extends Model {
 
     private int floor;
     private int row;

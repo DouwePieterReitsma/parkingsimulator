@@ -1,5 +1,7 @@
 package parkingsimulator;
 
+import parkingsimulator.models.Car;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
