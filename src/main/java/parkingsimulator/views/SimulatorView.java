@@ -2,24 +2,18 @@ package parkingsimulator.views;
 
 import parkingsimulator.models.Car;
 import parkingsimulator.models.Location;
+import parkingsimulator.models.SimulatorViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SimulatorView extends JFrame {
+public class SimulatorView extends View {
     private CarParkView carParkView;
-    private int numberOfFloors;
-    private int numberOfRows;
-    private int numberOfPlaces;
-    private int numberOfOpenSpots;
-    private Car[][][] cars;
 
-    public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
-        this.numberOfFloors = numberOfFloors;
-        this.numberOfRows = numberOfRows;
-        this.numberOfPlaces = numberOfPlaces;
-        this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
-        cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
+    private SimulatorViewModel model;
+
+    public SimulatorView(SimulatorViewModel model) {
+        this.model = model;
         
         carParkView = new CarParkView();
 
@@ -35,27 +29,11 @@ public class SimulatorView extends JFrame {
         carParkView.updateView();
     }
     
-	public int getNumberOfFloors() {
-        return numberOfFloors;
-    }
-
-    public int getNumberOfRows() {
-        return numberOfRows;
-    }
-
-    public int getNumberOfPlaces() {
-        return numberOfPlaces;
-    }
-
-    public int getNumberOfOpenSpots(){
-    	return numberOfOpenSpots;
-    }
-    
     public Car getCarAt(Location location) {
         if (!locationIsValid(location)) {
             return null;
         }
-        return cars[location.getFloor()][location.getRow()][location.getPlace()];
+        return model.getCars()[location.getFloor()][location.getRow()][location.getPlace()];
     }
 
     public boolean setCarAt(Location location, Car car) {
@@ -64,9 +42,9 @@ public class SimulatorView extends JFrame {
         }
         Car oldCar = getCarAt(location);
         if (oldCar == null) {
-            cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
+            this.model.getCars()[location.getFloor()][location.getRow()][location.getPlace()] = car;
             car.setLocation(location);
-            numberOfOpenSpots--;
+            model.decrementNumberOfOpenSpots();
             return true;
         }
         return false;
@@ -80,16 +58,16 @@ public class SimulatorView extends JFrame {
         if (car == null) {
             return null;
         }
-        cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
+        this.model.getCars()[location.getFloor()][location.getRow()][location.getPlace()] = null;
         car.setLocation(null);
-        numberOfOpenSpots++;
+        model.incrementNumberOfOpenSpots();
         return car;
     }
 
     public Location getFirstFreeLocation() {
-        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-            for (int row = 0; row < getNumberOfRows(); row++) {
-                for (int place = 0; place < getNumberOfPlaces(); place++) {
+        for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
+            for (int row = 0; row < model.getNumberOfRows(); row++) {
+                for (int place = 0; place < model.getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
                     if (getCarAt(location) == null) {
                         return location;
@@ -101,9 +79,9 @@ public class SimulatorView extends JFrame {
     }
 
     public Car getFirstLeavingCar() {
-        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-            for (int row = 0; row < getNumberOfRows(); row++) {
-                for (int place = 0; place < getNumberOfPlaces(); place++) {
+        for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
+            for (int row = 0; row < model.getNumberOfRows(); row++) {
+                for (int place = 0; place < model.getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
                     Car car = getCarAt(location);
                     if (car != null && car.getMinutesLeft() <= 0 && !car.getIsPaying()) {
@@ -116,9 +94,9 @@ public class SimulatorView extends JFrame {
     }
 
     public void tick() {
-        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-            for (int row = 0; row < getNumberOfRows(); row++) {
-                for (int place = 0; place < getNumberOfPlaces(); place++) {
+        for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
+            for (int row = 0; row < model.getNumberOfRows(); row++) {
+                for (int place = 0; place < model.getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
                     Car car = getCarAt(location);
                     if (car != null) {
@@ -133,7 +111,7 @@ public class SimulatorView extends JFrame {
         int floor = location.getFloor();
         int row = location.getRow();
         int place = location.getPlace();
-        if (floor < 0 || floor >= numberOfFloors || row < 0 || row > numberOfRows || place < 0 || place > numberOfPlaces) {
+        if (floor < 0 || floor >= model.getNumberOfFloors() || row < 0 || row > model.getNumberOfRows() || place < 0 || place > model.getNumberOfPlaces()) {
             return false;
         }
         return true;
@@ -184,9 +162,9 @@ public class SimulatorView extends JFrame {
                 carParkImage = createImage(size.width, size.height);
             }
             Graphics graphics = carParkImage.getGraphics();
-            for(int floor = 0; floor < getNumberOfFloors(); floor++) {
-                for(int row = 0; row < getNumberOfRows(); row++) {
-                    for(int place = 0; place < getNumberOfPlaces(); place++) {
+            for(int floor = 0; floor < model.getNumberOfFloors(); floor++) {
+                for(int row = 0; row < model.getNumberOfRows(); row++) {
+                    for(int place = 0; place < model.getNumberOfPlaces(); place++) {
                         Location location = new Location(floor, row, place);
                         Car car = getCarAt(location);
                         Color color = car == null ? Color.white : car.getColor();

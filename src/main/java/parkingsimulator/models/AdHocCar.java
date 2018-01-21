@@ -1,9 +1,7 @@
 package parkingsimulator.models;
 
-import parkingsimulator.models.Car;
-
-import java.util.Random;
 import java.awt.*;
+import java.util.Random;
 
 public class AdHocCar extends Car
 {

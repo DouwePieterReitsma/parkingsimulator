@@ -1,9 +1,11 @@
 package parkingsimulator;
 
+import parkingsimulator.controllers.SimulatorController;
+
 public class ParkingSimulator
 {
     public static void main(String[] args) {
-        Simulator simulator = new Simulator();
+        SimulatorController simulator = new SimulatorController();
 
         simulator.run();
     }
