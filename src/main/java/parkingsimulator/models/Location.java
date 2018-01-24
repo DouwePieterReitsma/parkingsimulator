@@ -45,8 +45,8 @@ public class Location extends Model {
     * Set location for pass
     */
 
-    public void setForPass(){
-        forPass = true;
+    public void setForPass(boolean forPass){
+        this.forPass = forPass;
     }
 
     /**
