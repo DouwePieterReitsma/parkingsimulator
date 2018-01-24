@@ -5,8 +5,10 @@ public class Location extends Model {
     private int floor;
     private int row;
     private int place;
-    private boolean forPass;
     private boolean forSubscriber;
+    private int reservationBeginTimeInMinutes;
+    private int reservationEndTimeInMinutes;
+    private boolean isReserved;
 
     /**
      * Constructor for objects of class Location
@@ -15,8 +17,8 @@ public class Location extends Model {
         this.floor = floor;
         this.row = row;
         this.place = place;
-        this.forPass = false;
         this.forSubscriber = false;
+        this.isReserved = false;
     }
 
     /**
@@ -33,25 +35,8 @@ public class Location extends Model {
     }
 
     /**
-     * Get whether or not a location is reserved for pass
-     * @return Whether or not a location is reserved
-     */
-
-    public boolean isForPass() {
-        return forPass;
-    }
-
-    /**
-    * Set location for pass
-    */
-
-    public void setForPass(boolean forPass){
-        this.forPass = forPass;
-    }
-
-    /**
-     * Get whether or not a location is reserved for subscriber
-     * @return Whether or not a location is reserved
+     * Get whether or not a location is reserved for subscribers
+     * @return Whether or not a location is reserved for subscribers
      */
     public boolean isForSubscriber() {
         return forSubscriber;
@@ -59,16 +44,29 @@ public class Location extends Model {
     /**
      * Set for subscriber
      */
-    public void setForSubscriber(){
-        forSubscriber = true;
+    public void setForSubscriber(boolean forSubscriber){
+        this.forSubscriber = forSubscriber;
+    }
+
+    /**
+     * Reserve this location
+     * @param beginTimeInMinutes
+     * @param endTimeInMinutes
+     */
+    public void reserve(int beginTimeInMinutes, int endTimeInMinutes)
+    {
+        this.reservationBeginTimeInMinutes = beginTimeInMinutes;
+        this.reservationEndTimeInMinutes = endTimeInMinutes;
+        this.isReserved = true;
     }
 
     /**
      * Unmark the location as reserved
      */
     public void unReserve(){
-        forPass = false;
-        forSubscriber = false;
+        isReserved = false;
+        reservationBeginTimeInMinutes = 0;
+        reservationEndTimeInMinutes = 0;
     }
     /**
      * Return a string of the form floor,row,place.
@@ -109,4 +107,11 @@ public class Location extends Model {
         return place;
     }
 
+    public boolean isReserved() {
+        return isReserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        isReserved = reserved;
+    }
 }

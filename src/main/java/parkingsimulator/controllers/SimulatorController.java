@@ -35,14 +35,15 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
     }
 
     public void run() {
-        for (int i = 0; i < 10000; i++) {
+        int steps = 10000;
+
+        for (int i = 0; i < steps; i++) {
             tick();
         }
     }
 
     private void tick() {
         advanceTime();
-        handleExit();
         updateViews();
         // Pause.
         try {

@@ -111,9 +111,11 @@ public class SimulatorView extends View {
         int floor = location.getFloor();
         int row = location.getRow();
         int place = location.getPlace();
+
         if (floor < 0 || floor >= model.getNumberOfFloors() || row < 0 || row > model.getNumberOfRows() || place < 0 || place > model.getNumberOfPlaces()) {
             return false;
         }
+
         return true;
     }
     
