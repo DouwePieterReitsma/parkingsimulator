@@ -16,7 +16,6 @@ public class Reservation extends Model
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.location = location;
-        this.location.setReserved(true);
     }
 
     public int getBeginTime() {

@@ -42,10 +42,6 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
         }
     }
 
-    private boolean reserveSpot(int beginTime, int endTime){
-        return true;
-    }
-
     private void tick() {
         advanceTime();
         updateViews();
@@ -56,6 +52,7 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
             e.printStackTrace();
         }
         handleEntrance();
+        handleExit();
     }
 
     private void advanceTime() {

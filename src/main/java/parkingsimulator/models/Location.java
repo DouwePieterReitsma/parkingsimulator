@@ -1,11 +1,16 @@
 package parkingsimulator.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Location extends Model {
 
     private int floor;
     private int row;
     private int place;
     private boolean forSubscriber;
+    private Car car;
+    private List<Reservation> reservations;
 
     /**
      * Constructor for objects of class Location
@@ -15,6 +20,7 @@ public class Location extends Model {
         this.row = row;
         this.place = place;
         this.forSubscriber = false;
+        this.reservations = new ArrayList<>();
     }
 
     /**
@@ -29,6 +35,22 @@ public class Location extends Model {
             return false;
         }
     }
+
+    /**
+     * @param car
+     */
+    public void setCar(Car car){
+        this.car = car;
+    }
+
+    /**
+     * @return The car that is parked at this location
+     */
+    public Car getCar()
+    {
+        return this.car;
+    }
+
 
     /**
      * Get whether or not a location is reserved for subscribers
@@ -81,5 +103,12 @@ public class Location extends Model {
      */
     public int getPlace() {
         return place;
+    }
+
+    /**
+     * @return List of reservations for this location
+     */
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 }

@@ -1,12 +1,8 @@
 package parkingsimulator.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SimulatorViewModel extends Model
 {
-    private Car[][][] cars;
-    private List<Reservation> reservations;
+    private Location[][][] locations;
     private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
     private CarQueue paymentCarQueue;
@@ -22,16 +18,23 @@ public class SimulatorViewModel extends Model
         this.numberOfPlaces = numberOfPlaces;
         this.numberOfOpenSpots = numberOfFloors * numberOfRows * numberOfPlaces;
 
-        cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
-        reservations = new ArrayList<>();
+        locations = new Location[numberOfFloors][numberOfRows][numberOfPlaces];
+
+        for(int floor = 0; floor < numberOfFloors; floor++)
+        {
+            for(int row = 0; row < numberOfRows; row++)
+            {
+                for (int place = 0; place < numberOfPlaces; place++)
+                {
+                    locations[floor][row][place] = new Location(floor, row, place);
+                }
+            }
+        }
+
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
-    }
-
-    public Car[][][] getCars() {
-        return cars;
     }
 
     public CarQueue getEntranceCarQueue() {
@@ -74,7 +77,7 @@ public class SimulatorViewModel extends Model
         numberOfOpenSpots--;
     }
 
-    public List<Reservation> getReservations() {
-        return reservations;
+    public Location[][][] getLocations() {
+        return locations;
     }
 }
