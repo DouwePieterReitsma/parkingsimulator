@@ -8,13 +8,16 @@ public abstract class Car {
     private int minutesLeft;
     private boolean isPaying;
     private boolean hasToPay;
+    private double feePerHour = 10;
+
 
     /**
      * Constructor for objects of class Car
      */
     public Car() {
-
     }
+
+    public abstract double getPrice();
 
     public Location getLocation() {
         return location;
@@ -53,4 +56,8 @@ public abstract class Car {
     }
     
     public abstract Color getColor();
+
+    public double getFeePerHour() {
+        return feePerHour;
+    }
 }
