@@ -7,9 +7,9 @@ import java.util.Random;
 
 public class SimulatorController extends Controller<SimulatorView, SimulatorViewModel>
 {
-
-    private static final String AD_HOC = "1";
-    private static final String PASS = "2";
+    private enum CarType {
+        AD_HOC, PASS, RESERVATION
+    }
 
     private int day = 0;
     private int hour = 0;
@@ -40,6 +40,10 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
         for (int i = 0; i < steps; i++) {
             tick();
         }
+    }
+
+    private boolean reserveSpot(int beginTime, int endTime){
+        return true;
     }
 
     private void tick() {
@@ -91,9 +95,9 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
 
     private void carsArriving() {
         int numberOfCars = getNumberOfCars(weekDayArrivals, weekendArrivals);
-        addArrivingCars(numberOfCars, AD_HOC);
+        addArrivingCars(numberOfCars, CarType.AD_HOC);
         numberOfCars = getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
-        addArrivingCars(numberOfCars, PASS);
+        addArrivingCars(numberOfCars, CarType.PASS);
     }
 
     private void carsEntering(CarQueue queue) {
@@ -158,7 +162,7 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
         return (int) Math.round(numberOfCarsPerHour / 60);
     }
 
-    private void addArrivingCars(int numberOfCars, String type) {
+    private void addArrivingCars(int numberOfCars, CarType type) {
         // Add the cars to the back of the queue.
         switch (type) {
             case AD_HOC:
@@ -168,12 +172,7 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
                 break;
             case PASS:
                 for (int i = 0; i < numberOfCars; i++) {
-                    this.getModel().getEntrancePassQueue().addCar(new ParkingPassCar() {
-                        @Override
-                        public double getPrice() {
-                            return 0;
-                        }
-                    })
+                    this.getModel().getEntrancePassQueue().addCar(new ParkingPassCar());
                 }
                 break;
         }

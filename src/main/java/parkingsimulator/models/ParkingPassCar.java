@@ -3,7 +3,7 @@ package parkingsimulator.models;
 import java.awt.*;
 import java.util.Random;
 
-public abstract class ParkingPassCar extends Car
+public class ParkingPassCar extends Car
 {
 	private static final Color COLOR = Color.blue;
 	
@@ -13,7 +13,12 @@ public abstract class ParkingPassCar extends Car
         this.setMinutesLeft(stayMinutes);
         this.setHasToPay(false);
     }
-    
+
+    @Override
+    public double getPrice() {
+        return 0;
+    }
+
     public Color getColor(){
     	return COLOR;
     }

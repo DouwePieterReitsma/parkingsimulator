@@ -6,9 +6,6 @@ public class Location extends Model {
     private int row;
     private int place;
     private boolean forSubscriber;
-    private int reservationBeginTimeInMinutes;
-    private int reservationEndTimeInMinutes;
-    private boolean isReserved;
 
     /**
      * Constructor for objects of class Location
@@ -18,7 +15,6 @@ public class Location extends Model {
         this.row = row;
         this.place = place;
         this.forSubscriber = false;
-        this.isReserved = false;
     }
 
     /**
@@ -48,26 +44,6 @@ public class Location extends Model {
         this.forSubscriber = forSubscriber;
     }
 
-    /**
-     * Reserve this location
-     * @param beginTimeInMinutes
-     * @param endTimeInMinutes
-     */
-    public void reserve(int beginTimeInMinutes, int endTimeInMinutes)
-    {
-        this.reservationBeginTimeInMinutes = beginTimeInMinutes;
-        this.reservationEndTimeInMinutes = endTimeInMinutes;
-        this.isReserved = true;
-    }
-
-    /**
-     * Unmark the location as reserved
-     */
-    public void unReserve(){
-        isReserved = false;
-        reservationBeginTimeInMinutes = 0;
-        reservationEndTimeInMinutes = 0;
-    }
     /**
      * Return a string of the form floor,row,place.
      * @return A string representation of the location.
@@ -105,13 +81,5 @@ public class Location extends Model {
      */
     public int getPlace() {
         return place;
-    }
-
-    public boolean isReserved() {
-        return isReserved;
-    }
-
-    public void setReserved(boolean reserved) {
-        isReserved = reserved;
     }
 }
