@@ -8,6 +8,7 @@ public abstract class Car {
     private int minutesLeft;
     private boolean isPaying;
     private boolean hasToPay;
+    protected int stayMinutes;
 
     /**
      * Constructor for objects of class Car
