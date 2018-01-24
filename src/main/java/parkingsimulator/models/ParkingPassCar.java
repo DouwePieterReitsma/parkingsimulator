@@ -3,7 +3,7 @@ package parkingsimulator.models;
 import java.awt.*;
 import java.util.Random;
 
-public class ParkingPassCar extends Car
+public abstract class ParkingPassCar extends Car
 {
 	private static final Color COLOR = Color.blue;
 	

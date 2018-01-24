@@ -42,7 +42,7 @@ public class Location extends Model {
         return forSubscriber;
     }
     /**
-     * Set for subscriber
+     * Set location for subscriber
      */
     public void setForSubscriber(boolean forSubscriber){
         this.forSubscriber = forSubscriber;

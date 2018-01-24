@@ -168,7 +168,12 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
                 break;
             case PASS:
                 for (int i = 0; i < numberOfCars; i++) {
-                    this.getModel().getEntrancePassQueue().addCar(new ParkingPassCar());
+                    this.getModel().getEntrancePassQueue().addCar(new ParkingPassCar() {
+                        @Override
+                        public double getPrice() {
+                            return 0;
+                        }
+                    })
                 }
                 break;
         }
