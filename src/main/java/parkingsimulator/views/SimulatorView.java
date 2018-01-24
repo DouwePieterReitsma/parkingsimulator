@@ -16,6 +16,9 @@ public class SimulatorView extends View
     public SimulatorView(SimulatorViewModel model) {
         this.model = model;
 
+        this.setTitle("Parking Simulator");
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         carParkView = new CarParkView();
 
         Container contentPane = getContentPane();
@@ -45,7 +48,6 @@ public class SimulatorView extends View
         }
         Car oldCar = getCarAt(location);
         if (oldCar == null) {
-            //this.model.getCars()[location.getFloor()][location.getRow()][location.getPlace()] = car;
             this.model.getLocations()[location.getFloor()][location.getRow()][location.getPlace()].setCar(car);
             car.setLocation(location);
             model.decrementNumberOfOpenSpots();
@@ -58,14 +60,17 @@ public class SimulatorView extends View
         if (!locationIsValid(location)) {
             return null;
         }
+
         Car car = getCarAt(location);
+
         if (car == null) {
             return null;
         }
-        //this.model.getCars()[location.getFloor()][location.getRow()][location.getPlace()] = null;
+
         this.model.getLocations()[location.getFloor()][location.getRow()][location.getPlace()].setCar(null);
         car.setLocation(null);
         model.incrementNumberOfOpenSpots();
+
         return car;
     }
 
@@ -73,15 +78,11 @@ public class SimulatorView extends View
         for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
             for (int row = 0; row < model.getNumberOfRows(); row++) {
                 for (int place = 0; place < model.getNumberOfPlaces(); place++) {
-                    //Location location = new Location(floor, row, place);
-                    //if (getCarAt(location) == null) {
-                    //    return location;
-                    //}
+
                     Location location = this.model.getLocations()[floor][row][place];
 
                     if (getCarAt(location) == null)
                         return location;
-
                 }
             }
         }
@@ -92,12 +93,6 @@ public class SimulatorView extends View
         for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
             for (int row = 0; row < model.getNumberOfRows(); row++) {
                 for (int place = 0; place < model.getNumberOfPlaces(); place++) {
-//                    Location location = new Location(floor, row, place);
-//                    Car car = getCarAt(location);
-//                    if (car != null && car.getMinutesLeft() <= 0 && !car.getIsPaying()) {
-//                        return car;
-//                    }
-
                     Location location = model.getLocations()[floor][row][place];
 
                     if (location.getCar() != null && location.getCar().getMinutesLeft() <= 0 && !location.getCar().getIsPaying())
@@ -112,12 +107,6 @@ public class SimulatorView extends View
         for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
             for (int row = 0; row < model.getNumberOfRows(); row++) {
                 for (int place = 0; place < model.getNumberOfPlaces(); place++) {
-//                    Location location = new Location(floor, row, place);
-//                    Car car = getCarAt(location);
-//                    if (car != null) {
-//                        car.tick();
-//                    }
-
                     Location location = model.getLocations()[floor][row][place];
 
                     if (location.getCar() != null)
@@ -178,6 +167,9 @@ public class SimulatorView extends View
             }
         }
 
+        /**
+         * Update the view
+         */
         public void updateView() {
             // Create a new car park image if the size has changed.
             if (!size.equals(getSize())) {
@@ -188,11 +180,6 @@ public class SimulatorView extends View
             for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
                 for (int row = 0; row < model.getNumberOfRows(); row++) {
                     for (int place = 0; place < model.getNumberOfPlaces(); place++) {
-//                        Location location = new Location(floor, row, place);
-//                        Car car = getCarAt(location);
-//                        Color color = car == null ? Color.white : car.getColor();
-//                        drawPlace(graphics, location, color);
-
                         Location location = model.getLocations()[floor][row][place];
 
                         Color color = location.getCar() == null ? Color.white : location.getCar().getColor();
