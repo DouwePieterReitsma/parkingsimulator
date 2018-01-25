@@ -7,6 +7,6 @@ public class ParkingSimulator
     public static void main(String[] args) {
         SimulatorController simulator = new SimulatorController();
 
-        simulator.run();
+
     }
 }

@@ -14,7 +14,8 @@ public class SimulatorView extends View
     private JButton oneStep;
     private JButton hundredSteps;
     private Container contentPane;
-    private Container buttons;
+    private JPanel buttons;
+
 
     public SimulatorView(SimulatorViewModel model) {
         this.model = model;
@@ -26,12 +27,14 @@ public class SimulatorView extends View
         oneStep = new JButton("1 step");
         hundredSteps = new JButton("100 steps");
 
-        buttons = getContentPane();
-        buttons.add(oneStep, BorderLayout.WEST);
+        buttons = new JPanel(new BorderLayout());
+        buttons.add(oneStep, BorderLayout.CENTER);
         buttons.add(hundredSteps, BorderLayout.EAST);
 
+
         contentPane = getContentPane();
-        contentPane.add(carParkView, BorderLayout.CENTER);
+        contentPane.add(carParkView, BorderLayout.NORTH);
+        contentPane.add(buttons, BorderLayout.WEST);
 
         pack();
         setVisible(true);
