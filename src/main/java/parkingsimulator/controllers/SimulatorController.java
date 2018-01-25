@@ -3,6 +3,7 @@ package parkingsimulator.controllers;
 import parkingsimulator.models.*;
 import parkingsimulator.views.SimulatorView;
 
+import java.util.Calendar;
 import java.util.Random;
 
 public class SimulatorController extends Controller<SimulatorView, SimulatorViewModel>
@@ -11,9 +12,7 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
         AD_HOC, PASS, RESERVATION
     }
 
-    private int day = 0;
-    private int hour = 0;
-    private int minute = 0;
+    private Calendar dateTime;
 
     private int tickPause = 100;
 
@@ -29,6 +28,14 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
     public SimulatorController() {
         SimulatorViewModel model = new SimulatorViewModel(3, 3, 30);
         SimulatorView view = new SimulatorView(model);
+
+        dateTime = Calendar.getInstance();
+        dateTime.set(Calendar.YEAR, 1);
+        dateTime.set(Calendar.MONTH, Calendar.JANUARY);
+        dateTime.set(Calendar.DAY_OF_MONTH, 0);
+        dateTime.set(Calendar.HOUR_OF_DAY, 0);
+        dateTime.set(Calendar.MINUTE, 0);
+        dateTime.set(Calendar.SECOND, 0);
 
         this.setModel(model);
         this.setView(view);
@@ -57,25 +64,14 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
 
     private void advanceTime() {
         // Advance the time by one minute.
-        minute++;
-        while (minute > 59) {
-            minute -= 60;
-            hour++;
-        }
-        while (hour > 23) {
-            hour -= 24;
-            day++;
-        }
-        while (day > 6) {
-            day -= 7;
-        }
-
+        dateTime.add(Calendar.MINUTE, 1);
     }
 
     private void handleEntrance() {
         carsArriving();
         carsEntering(this.getModel().getEntrancePassQueue());
         carsEntering(this.getModel().getEntranceCarQueue());
+        carsEntering(this.getModel().getEntranceReservationQueue());
     }
 
     private void handleExit() {
@@ -148,10 +144,13 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
     private int getNumberOfCars(int weekDay, int weekend) {
         Random random = new Random();
 
+        boolean isWeekend = dateTime.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+                || dateTime.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
+
         // Get the average number of cars that arrive per hour.
-        int averageNumberOfCarsPerHour = day < 5
-                ? weekDay
-                : weekend;
+        int averageNumberOfCarsPerHour = isWeekend
+                ? weekend
+                : weekDay;
 
         // Calculate the number of cars that arrive this minute.
         double standardDeviation = averageNumberOfCarsPerHour * 0.3;
@@ -173,6 +172,9 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
                 }
                 break;
             case RESERVATION:
+                for (int i = 0; i < numberOfCars; i++){
+                    this.getModel().getEntranceCarQueue().addCar(new ReservationCar());
+                }
                 break;
         }
     }

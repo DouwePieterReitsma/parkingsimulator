@@ -1,9 +1,11 @@
 package parkingsimulator.models;
 
+import java.util.Calendar;
+
 public class Reservation extends Model
 {
-    private int beginTime;
-    private int endTime;
+    private Calendar beginTime;
+    private Calendar endTime;
     private Location location;
 
     /**
@@ -12,17 +14,17 @@ public class Reservation extends Model
      * @param beginTime
      * @param endTime
      */
-    public Reservation(Location location, int beginTime, int endTime) {
+    public Reservation(Location location, Calendar beginTime, Calendar endTime) {
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.location = location;
     }
 
-    public int getBeginTime() {
+    public Calendar getBeginTime() {
         return beginTime;
     }
 
-    public int getEndTime() {
+    public Calendar getEndTime() {
         return endTime;
     }
 

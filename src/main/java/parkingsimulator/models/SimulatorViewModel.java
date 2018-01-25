@@ -5,6 +5,7 @@ public class SimulatorViewModel extends Model
     private Location[][][] locations;
     private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
+    private CarQueue entranceReservationQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
     private int numberOfFloors;
@@ -33,6 +34,7 @@ public class SimulatorViewModel extends Model
 
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
+        entranceReservationQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
     }
@@ -79,5 +81,9 @@ public class SimulatorViewModel extends Model
 
     public Location[][][] getLocations() {
         return locations;
+    }
+
+    public CarQueue getEntranceReservationQueue() {
+        return entranceReservationQueue;
     }
 }
