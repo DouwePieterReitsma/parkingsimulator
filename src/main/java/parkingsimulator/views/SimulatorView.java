@@ -24,7 +24,7 @@ public class SimulatorView extends View
         screen.getContentPane().add(carParkView, BorderLayout.CENTER);
 
         carParkView.setBounds(10, 10, 800, 500);
-        screen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screen.setVisible(true);
 
         this.model = model;
