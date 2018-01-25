@@ -31,4 +31,11 @@ public class Reservation extends Model
     public Location getLocation() {
         return location;
     }
+
+    public boolean overlapsWith(Reservation reservation){
+        if (!location.equals(reservation.location))
+            return false;
+
+        return endTime.before(reservation.getBeginTime()) || beginTime.after(reservation.getEndTime());
+    }
 }
