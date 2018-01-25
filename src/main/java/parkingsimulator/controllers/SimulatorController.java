@@ -27,7 +27,7 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
     private int exitSpeed = 5; // number of cars that can leave per minute
 
     public SimulatorController() {
-        SimulatorViewModel model = new SimulatorViewModel(3, 6, 30);
+        SimulatorViewModel model = new SimulatorViewModel(3, 3, 30);
         SimulatorView view = new SimulatorView(model);
 
         this.setModel(model);
@@ -172,6 +172,8 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
                     this.getModel().getEntrancePassQueue().addCar(new ParkingPassCar());
                 }
                 break;
+            case RESERVATION:
+                for
         }
     }
 
