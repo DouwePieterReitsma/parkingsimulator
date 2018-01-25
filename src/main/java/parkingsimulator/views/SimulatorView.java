@@ -9,25 +9,32 @@ import java.awt.*;
 
 public class SimulatorView extends View
 {
-    private JFrame screen;
     private CarParkView carParkView;
-
     private SimulatorViewModel model;
+    private JButton oneStep;
+    private JButton hundredSteps;
+    private Container contentPane;
+    private Container buttons;
 
     public SimulatorView(SimulatorViewModel model) {
-        carParkView = new CarParkView();
-
-        screen=new JFrame("Parking Simulator");
-        screen.setSize(1000, 700);
-        screen.setResizable(false);
-        screen.setLayout(null);
-        screen.getContentPane().add(carParkView, BorderLayout.CENTER);
-
-        carParkView.setBounds(10, 10, 800, 500);
-        screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        screen.setVisible(true);
-
         this.model = model;
+
+        this.setTitle("Parking Simulator");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        carParkView = new CarParkView();
+        oneStep = new JButton("1 step");
+        hundredSteps = new JButton("100 steps");
+
+        buttons = getContentPane();
+        buttons.add(oneStep, BorderLayout.WEST);
+        buttons.add(hundredSteps, BorderLayout.EAST);
+
+        contentPane = getContentPane();
+        contentPane.add(carParkView, BorderLayout.CENTER);
+
+        pack();
+        setVisible(true);
 
         updateView();
     }
