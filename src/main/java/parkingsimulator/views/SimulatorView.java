@@ -1,15 +1,17 @@
 package parkingsimulator.views;
 
-import parkingsimulator.models.Car;
-import parkingsimulator.models.Location;
-import parkingsimulator.models.SimulatorViewModel;
+import parkingsimulator.controllers.SimulatorController;
+import parkingsimulator.models.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SimulatorView extends View
 {
     private CarParkView carParkView;
+    private SimulatorController controller;
     private SimulatorViewModel model;
     private JButton oneStep;
     private JButton hundredSteps;
@@ -17,7 +19,9 @@ public class SimulatorView extends View
     private JPanel buttons;
 
 
-    public SimulatorView(SimulatorViewModel model) {
+    public SimulatorView(SimulatorController controller, SimulatorViewModel model) {
+        this.controller = controller;
+
         this.model = model;
 
         this.setTitle("Parking Simulator");
@@ -31,6 +35,17 @@ public class SimulatorView extends View
         buttons.add(oneStep, BorderLayout.CENTER);
         buttons.add(hundredSteps, BorderLayout.EAST);
 
+        oneStep.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controller.run(1);
+            }
+        });
+
+        hundredSteps.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controller.run(100);
+            }
+        });
 
         contentPane = getContentPane();
         contentPane.add(carParkView, BorderLayout.NORTH);

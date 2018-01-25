@@ -28,15 +28,13 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
 
     public SimulatorController() {
         SimulatorViewModel model = new SimulatorViewModel(3, 3, 30);
-        SimulatorView view = new SimulatorView(model);
+        SimulatorView view = new SimulatorView(this,model);
 
         this.setModel(model);
         this.setView(view);
     }
 
-    public void run() {
-        int steps = 10000;
-
+    public void run(int steps) {
         for (int i = 0; i < steps; i++) {
             tick();
         }
