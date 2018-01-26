@@ -17,6 +17,7 @@ public class SimulatorView extends AbstractView
     private JButton hundredSteps;
     private Container contentPane;
     private JPanel buttons;
+    private JFrame screen;
 
 
     public SimulatorView(SimulatorController controller, SimulatorViewModel model) {
@@ -24,8 +25,8 @@ public class SimulatorView extends AbstractView
 
         this.model = model;
 
-        this.setTitle("Parking Simulator");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        screen=new JFrame("Parking Simulator");
+        screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         carParkView = new CarParkView();
         oneStep = new JButton("1 step");
@@ -47,12 +48,12 @@ public class SimulatorView extends AbstractView
             }
         });
 
-        contentPane = getContentPane();
+        contentPane = screen.getContentPane();
         contentPane.add(carParkView, BorderLayout.NORTH);
         contentPane.add(buttons, BorderLayout.WEST);
 
-        pack();
-        setVisible(true);
+        screen.pack();
+        screen.setVisible(true);
 
         updateView();
     }
