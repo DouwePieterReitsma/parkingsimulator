@@ -6,7 +6,7 @@ import parkingsimulator.views.SimulatorView;
 import java.util.Calendar;
 import java.util.Random;
 
-public class SimulatorController extends Controller<SimulatorView, SimulatorViewModel>
+public class SimulatorController extends AbstractController<SimulatorView, SimulatorViewModel>
 {
     private enum CarType {
         AD_HOC, PASS, RESERVATION

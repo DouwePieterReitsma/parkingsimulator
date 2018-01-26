@@ -3,12 +3,12 @@ package parkingsimulator.controllers;
 import parkingsimulator.models.Model;
 import parkingsimulator.views.AbstractView;
 
-public class Controller<TView extends AbstractView, TModel extends Model>
+public abstract class AbstractController<TView extends AbstractView, TModel extends Model>
 {
     private TView view;
     private TModel model;
 
-    public Controller(){
+    public AbstractController(){
 
     }
 
