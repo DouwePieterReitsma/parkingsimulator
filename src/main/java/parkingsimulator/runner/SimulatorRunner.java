@@ -1,9 +1,8 @@
-package parkingsimulator;
+package parkingsimulator.runner;
 
 import parkingsimulator.controllers.SimulatorController;
 
-public class ParkingSimulator
-{
+public class SimulatorRunner {
     public static void main(String[] args) {
         SimulatorController simulator = new SimulatorController();
 
