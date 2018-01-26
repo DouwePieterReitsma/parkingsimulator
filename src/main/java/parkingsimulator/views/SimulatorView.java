@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SimulatorView extends View
+public class SimulatorView extends AbstractView
 {
     private CarParkView carParkView;
     private SimulatorController controller;
