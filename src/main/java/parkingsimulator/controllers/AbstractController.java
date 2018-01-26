@@ -1,9 +1,10 @@
 package parkingsimulator.controllers;
 
-import parkingsimulator.models.Model;
 import parkingsimulator.views.AbstractView;
+import parkingsimulator.models.AbstractModel;
 
-public abstract class AbstractController<TView extends AbstractView, TModel extends Model>
+
+public abstract class AbstractController<TView extends AbstractView, TModel extends AbstractModel>
 {
     private TView view;
     private TModel model;

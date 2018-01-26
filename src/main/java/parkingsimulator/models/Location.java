@@ -3,7 +3,7 @@ package parkingsimulator.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Location extends Model {
+public class Location extends AbstractModel {
 
     private int floor;
     private int row;

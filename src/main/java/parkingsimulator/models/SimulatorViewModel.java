@@ -1,7 +1,6 @@
 package parkingsimulator.models;
 
-public class SimulatorViewModel extends Model
-{
+public class SimulatorViewModel extends AbstractModel {
     private Location[][][] locations;
     private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;

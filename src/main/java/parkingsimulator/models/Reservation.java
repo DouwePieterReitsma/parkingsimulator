@@ -2,8 +2,7 @@ package parkingsimulator.models;
 
 import java.util.Calendar;
 
-public class Reservation extends Model
-{
+public class Reservation extends AbstractModel {
     private Calendar beginTime;
     private Calendar endTime;
     private Location location;
