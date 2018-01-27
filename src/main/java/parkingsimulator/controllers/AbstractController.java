@@ -28,4 +28,6 @@ public abstract class AbstractController<TView extends AbstractView, TModel exte
     public void setModel(TModel model) {
         this.model = model;
     }
+
+    public abstract void run(int steps);
 }
