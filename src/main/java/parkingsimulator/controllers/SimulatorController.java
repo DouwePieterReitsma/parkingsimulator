@@ -6,7 +6,7 @@ import parkingsimulator.views.SimulatorView;
 import java.util.Calendar;
 import java.util.Random;
 
-public class SimulatorController extends Controller<SimulatorView, SimulatorViewModel>
+public class SimulatorController extends AbstractController<SimulatorView, SimulatorViewModel>
 {
     private enum CarType {
         AD_HOC, PASS, RESERVATION
@@ -27,7 +27,7 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
 
     public SimulatorController() {
         SimulatorViewModel model = new SimulatorViewModel(3, 3, 30);
-        SimulatorView view = new SimulatorView(model);
+        SimulatorView view = new SimulatorView(this,model);
 
         dateTime = Calendar.getInstance();
         dateTime.set(Calendar.YEAR, 1);
@@ -41,9 +41,7 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
         this.setView(view);
     }
 
-    public void run() {
-        int steps = 10000;
-
+    public void run(int steps) {
         for (int i = 0; i < steps; i++) {
             tick();
         }

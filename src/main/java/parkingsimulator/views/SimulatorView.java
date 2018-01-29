@@ -1,27 +1,32 @@
 package parkingsimulator.views;
 
-import parkingsimulator.models.Car;
-import parkingsimulator.models.Location;
-import parkingsimulator.models.SimulatorViewModel;
+import parkingsimulator.controllers.SimulatorController;
+import parkingsimulator.models.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class SimulatorView extends View
+public class SimulatorView extends AbstractView
 {
     private CarParkView carParkView;
+    private SimulatorController controller;
     private SimulatorViewModel model;
     private JButton oneStep;
     private JButton hundredSteps;
     private Container contentPane;
     private JPanel buttons;
+    private JFrame screen;
 
 
-    public SimulatorView(SimulatorViewModel model) {
+    public SimulatorView(SimulatorController controller, SimulatorViewModel model) {
+        this.controller = controller;
+
         this.model = model;
 
-        this.setTitle("Parking Simulator");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        screen=new JFrame("Parking Simulator");
+        screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         carParkView = new CarParkView();
         oneStep = new JButton("1 step");
@@ -31,13 +36,24 @@ public class SimulatorView extends View
         buttons.add(oneStep, BorderLayout.CENTER);
         buttons.add(hundredSteps, BorderLayout.EAST);
 
+        oneStep.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controller.run(1);
+            }
+        });
 
-        contentPane = getContentPane();
+        hundredSteps.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controller.run(100);
+            }
+        });
+
+        contentPane = screen.getContentPane();
         contentPane.add(carParkView, BorderLayout.NORTH);
         contentPane.add(buttons, BorderLayout.WEST);
 
-        pack();
-        setVisible(true);
+        screen.pack();
+        screen.setVisible(true);
 
         updateView();
     }
