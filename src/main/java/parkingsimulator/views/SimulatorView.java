@@ -36,17 +36,8 @@ public class SimulatorView extends AbstractView
         buttons.add(oneStep, BorderLayout.CENTER);
         buttons.add(hundredSteps, BorderLayout.EAST);
 
-        oneStep.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                controller.run(1);
-            }
-        });
-
-        hundredSteps.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                controller.run(100);
-            }
-        });
+        oneStep.addActionListener(e -> controller.run(1));
+        hundredSteps.addActionListener(e -> controller.run(100));
 
         contentPane = screen.getContentPane();
         contentPane.add(carParkView, BorderLayout.NORTH);
@@ -62,76 +53,6 @@ public class SimulatorView extends AbstractView
         carParkView.updateView();
     }
 
-    public Car getCarAt(Location location) {
-        if (!locationIsValid(location)) {
-            return null;
-        }
-        //return model.getCars()[location.getFloor()][location.getRow()][location.getPlace()];
-
-        return model.getLocations()[location.getFloor()][location.getRow()][location.getPlace()].getCar();
-    }
-
-    public boolean setCarAt(Location location, Car car) {
-        if (!locationIsValid(location)) {
-            return false;
-        }
-        Car oldCar = getCarAt(location);
-        if (oldCar == null) {
-            this.model.getLocations()[location.getFloor()][location.getRow()][location.getPlace()].setCar(car);
-            car.setLocation(location);
-            model.decrementNumberOfOpenSpots();
-            return true;
-        }
-        return false;
-    }
-
-    public Car removeCarAt(Location location) {
-        if (!locationIsValid(location)) {
-            return null;
-        }
-
-        Car car = getCarAt(location);
-
-        if (car == null) {
-            return null;
-        }
-
-        this.model.getLocations()[location.getFloor()][location.getRow()][location.getPlace()].setCar(null);
-        car.setLocation(null);
-        model.incrementNumberOfOpenSpots();
-
-        return car;
-    }
-
-    public Location getFirstFreeLocation() {
-        for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
-            for (int row = 0; row < model.getNumberOfRows(); row++) {
-                for (int place = 0; place < model.getNumberOfPlaces(); place++) {
-
-                    Location location = this.model.getLocations()[floor][row][place];
-
-                    if (getCarAt(location) == null)
-                        return location;
-                }
-            }
-        }
-        return null;
-    }
-
-    public Car getFirstLeavingCar() {
-        for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
-            for (int row = 0; row < model.getNumberOfRows(); row++) {
-                for (int place = 0; place < model.getNumberOfPlaces(); place++) {
-                    Location location = model.getLocations()[floor][row][place];
-
-                    if (location.getCar() != null && location.getCar().getMinutesLeft() <= 0 && !location.getCar().getIsPaying())
-                        return location.getCar();
-                }
-            }
-        }
-        return null;
-    }
-
     public void tick() {
         for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
             for (int row = 0; row < model.getNumberOfRows(); row++) {
@@ -143,18 +64,6 @@ public class SimulatorView extends AbstractView
                 }
             }
         }
-    }
-
-    private boolean locationIsValid(Location location) {
-        int floor = location.getFloor();
-        int row = location.getRow();
-        int place = location.getPlace();
-
-        if (floor < 0 || floor >= model.getNumberOfFloors() || row < 0 || row > model.getNumberOfRows() || place < 0 || place > model.getNumberOfPlaces()) {
-            return false;
-        }
-
-        return true;
     }
 
     private class CarParkView extends JPanel

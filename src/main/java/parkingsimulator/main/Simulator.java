@@ -15,7 +15,7 @@ public class Simulator {
      * Constructor for the Simulator.
      */
     public Simulator() {
-        simulatorController=new SimulatorController();
+        simulatorController = new SimulatorController();
 
         simulatorController.run(100);
     }

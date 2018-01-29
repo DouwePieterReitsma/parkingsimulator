@@ -3,16 +3,14 @@ package parkingsimulator.models;
 import java.awt.*;
 import java.util.Random;
 
-public class ReservationCar extends Car
-{
-    private static final Color COLOR = Color.green;
+public class ReservationCar extends Car {
+    private static final Color COLOR = Color.getHSBColor(120, 100, 50);
 
     private int stayMinutes;
 
-    public ReservationCar()
-    {
+    public ReservationCar() {
         Random random = new Random();
-        stayMinutes = (int)(15 * random.nextFloat() * 3 * 60);
+        stayMinutes = (int) (15 * random.nextFloat() * 3 * 60);
         this.setMinutesLeft(stayMinutes);
         this.setHasToPay(true);
     }
@@ -23,8 +21,7 @@ public class ReservationCar extends Car
     }
 
     @Override
-    public double getPrice()
-    {
+    public double getPrice() {
         int extraFee = 5;
         return stayMinutes * (this.getFeePerHour() / 60) + extraFee;
     }

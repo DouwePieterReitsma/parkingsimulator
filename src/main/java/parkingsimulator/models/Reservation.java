@@ -3,28 +3,28 @@ package parkingsimulator.models;
 import java.util.Calendar;
 
 public class Reservation extends AbstractModel {
-    private Calendar beginTime;
-    private Calendar endTime;
+    private Calendar begin;
+    private Calendar end;
     private Location location;
 
     /**
      * This class represents a reservation in the parking garage
      * @param location
-     * @param beginTime
-     * @param endTime
+     * @param begin
+     * @param end
      */
-    public Reservation(Location location, Calendar beginTime, Calendar endTime) {
-        this.beginTime = beginTime;
-        this.endTime = endTime;
+    public Reservation(Location location, Calendar begin, Calendar end) {
+        this.begin = begin;
+        this.end = end;
         this.location = location;
     }
 
-    public Calendar getBeginTime() {
-        return beginTime;
+    public Calendar getBegin() {
+        return begin;
     }
 
-    public Calendar getEndTime() {
-        return endTime;
+    public Calendar getEnd() {
+        return end;
     }
 
     public Location getLocation() {
@@ -35,6 +35,6 @@ public class Reservation extends AbstractModel {
         if (!location.equals(reservation.location))
             return false;
 
-        return endTime.before(reservation.getBeginTime()) || beginTime.after(reservation.getEndTime());
+        return end.before(reservation.getBegin()) || begin.after(reservation.getEnd());
     }
 }
