@@ -23,7 +23,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
-                    <mainClass>parkingsimulator.ParkingSimulator</mainClass>
+                    <mainClass>parkingsimulator.runner.SimulatorRunner</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -33,7 +33,7 @@
                     <archive>
                         <manifest>
                             <!-- Jar file entry point -->
-                            <mainClass>parkingsimulator.ParkingSimulator</mainClass>
+                            <mainClass>parkingsimulator.runner.SimulatorRunner</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
