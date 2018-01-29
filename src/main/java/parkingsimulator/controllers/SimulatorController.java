@@ -184,4 +184,19 @@ public class SimulatorController extends Controller<SimulatorView, SimulatorView
         this.getModel().getExitCarQueue().addCar(car);
     }
 
+    private boolean createReservation(Location location, Calendar begin, Calendar end) {
+        Reservation reservation = new Reservation(location, begin, end);
+
+        for(Reservation r : location.getReservations()){
+            if (r.overlapsWith(reservation))
+                return false;
+        }
+
+        location.getReservations().add(reservation);
+        return true;
+    }
+
+    private void createReservations(){
+    }
+
 }
