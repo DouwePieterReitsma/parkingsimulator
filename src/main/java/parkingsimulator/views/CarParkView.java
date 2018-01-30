@@ -6,7 +6,7 @@ import parkingsimulator.models.SimulatorViewModel;
 import javax.swing.*;
 import java.awt.*;
 
-public class CarParkView extends JPanel
+public class CarParkView extends AbstractView
 {
 
     private Dimension size;

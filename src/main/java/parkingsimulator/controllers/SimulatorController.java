@@ -57,7 +57,7 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
             run(10000);
         }
     }
-    
+
 
     private void tick() {
         advanceTime();

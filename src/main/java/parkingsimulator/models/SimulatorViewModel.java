@@ -42,6 +42,10 @@ public class SimulatorViewModel extends AbstractModel {
         return entranceCarQueue;
     }
 
+    public int getEntranceCarQueueSize() {
+        return entranceCarQueue.carsInQueue();
+    }
+
     public CarQueue getEntrancePassQueue() {
         return entrancePassQueue;
     }
