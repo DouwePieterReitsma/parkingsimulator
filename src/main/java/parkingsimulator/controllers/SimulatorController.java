@@ -3,6 +3,7 @@ package parkingsimulator.controllers;
 import parkingsimulator.models.*;
 import parkingsimulator.views.SimulatorView;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -143,6 +144,10 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         while (this.getModel().getPaymentCarQueue().carsInQueue() > 0 && i < paymentSpeed) {
             Car car = this.getModel().getPaymentCarQueue().removeCar();
             // TODO Handle payment.
+            BigDecimal price = car.getPrice();
+
+            this.getModel().addToRevenue(price);
+
             carLeavesSpot(car);
             i++;
         }

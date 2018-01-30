@@ -1,6 +1,7 @@
 package parkingsimulator.models;
 
 import java.awt.*;
+import java.math.BigDecimal;
 import java.util.Random;
 
 public class ReservationCar extends Car {
@@ -21,8 +22,10 @@ public class ReservationCar extends Car {
     }
 
     @Override
-    public double getPrice() {
-        int extraFee = 5;
-        return stayMinutes * (this.getFeePerHour() / 60) + extraFee;
+    public BigDecimal getPrice() {
+        BigDecimal extraFee = new BigDecimal(5);
+        BigDecimal feePerMinute = getFeePerHour().divide(new BigDecimal(60));
+
+        return (new BigDecimal(stayMinutes)).multiply(feePerMinute).add(extraFee);
     }
 }
