@@ -35,6 +35,7 @@ public class SimulatorViewModel extends AbstractModel {
             reservePlaces = parkingPassHolders;
         }
 
+        // reserve the locations for pass holders
         for(int floor = 0; floor < numberOfFloors; floor++)
         {
             for(int row = 0; row < numberOfRows; row++)
@@ -47,6 +48,7 @@ public class SimulatorViewModel extends AbstractModel {
                         locations[floor][row][place].setForSubscriber(true);
                         reservePlaces--;
                     }
+
                 }
             }
         }

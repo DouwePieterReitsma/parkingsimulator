@@ -29,7 +29,7 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
     private boolean isRunning = true;
 
     public SimulatorController() {
-        SimulatorViewModel model = new SimulatorViewModel(3, 6, 30);
+        SimulatorViewModel model = new SimulatorViewModel(3, 6, 28);
         SimulatorView view = new SimulatorView(this, model);
 
         dateTime = Calendar.getInstance();
