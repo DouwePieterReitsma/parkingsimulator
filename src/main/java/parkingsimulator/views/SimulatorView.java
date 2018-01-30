@@ -8,13 +8,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SimulatorView extends AbstractView
-{
+public class SimulatorView extends AbstractView implements ActionListener {
     private CarParkView carParkView;
     private SimulatorController controller;
     private SimulatorViewModel model;
     private JButton oneStep;
     private JButton hundredSteps;
+    private JButton stopSimulating;
     private Container contentPane;
     private JPanel buttons;
     private JFrame screen;
@@ -30,23 +30,41 @@ public class SimulatorView extends AbstractView
 
         carParkView = new CarParkView(model);
         oneStep = new JButton("1 step");
+        oneStep.addActionListener(this);
         hundredSteps = new JButton("100 steps");
+        hundredSteps.addActionListener(this);
+        stopSimulating = new JButton("Stop");
+        stopSimulating.addActionListener(this);
 
-        buttons = new JPanel(new BorderLayout());
-        buttons.add(oneStep, BorderLayout.CENTER);
-        buttons.add(hundredSteps, BorderLayout.EAST);
 
-        oneStep.addActionListener(e -> controller.run(1));
-        hundredSteps.addActionListener(e -> controller.run(100));
+        buttons = new JPanel(new GridLayout(1,3));
+        buttons.add(oneStep);
+        buttons.add(hundredSteps);
+        buttons.add(stopSimulating);
+
+
+
 
         contentPane = screen.getContentPane();
-        contentPane.add(carParkView, BorderLayout.NORTH);
-        contentPane.add(buttons, BorderLayout.WEST);
+        contentPane.setLayout(new GridLayout(1,1));
+        contentPane.add(carParkView);
+        contentPane.add(buttons);
+
 
         screen.pack();
         screen.setVisible(true);
 
         updateView();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+        Thread thread = new Thread(() -> {
+            if (e.getSource()==oneStep) controller.run(1);
+            if (e.getSource()==hundredSteps) controller.run(100);
+            if (e.getSource()==stopSimulating) controller.toggle();
+        });
+        thread.start();
     }
 
     public void updateView() {
