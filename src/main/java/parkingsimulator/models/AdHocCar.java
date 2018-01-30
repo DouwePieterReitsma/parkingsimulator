@@ -1,6 +1,8 @@
 package parkingsimulator.models;
 
 import java.awt.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Random;
 
 public class AdHocCar extends Car
@@ -16,8 +18,10 @@ public class AdHocCar extends Car
     }
 
     @Override
-    public double getPrice() {
-        return getFeePerHour() / 60 * stayMinutes;
+    public BigDecimal getPrice() {
+        double hours = Math.ceil((float)stayMinutes / 60.0f);
+
+        return getFeePerHour().multiply(new BigDecimal(hours));
     }
 
     public Color getColor(){

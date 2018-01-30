@@ -1,5 +1,7 @@
 package parkingsimulator.models;
 
+import java.math.BigDecimal;
+
 public class SimulatorViewModel extends AbstractModel {
     private Location[][][] locations;
     private CarQueue entranceCarQueue;
@@ -11,12 +13,15 @@ public class SimulatorViewModel extends AbstractModel {
     private int numberOfRows;
     private int numberOfPlaces;
     private int numberOfOpenSpots;
+    private BigDecimal revenue;
 
     public SimulatorViewModel(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
         this.numberOfOpenSpots = numberOfFloors * numberOfRows * numberOfPlaces;
+
+        revenue = new BigDecimal(0);
 
         locations = new Location[numberOfFloors][numberOfRows][numberOfPlaces];
 
@@ -88,5 +93,17 @@ public class SimulatorViewModel extends AbstractModel {
 
     public CarQueue getEntranceReservationQueue() {
         return entranceReservationQueue;
+    }
+
+    public BigDecimal getRevenue() {
+        return revenue;
+    }
+
+    public void addToRevenue(BigDecimal price) {
+        revenue = revenue.add(price);
+    }
+
+    public void subtractFromRevenue(BigDecimal price){
+        revenue = revenue.subtract(price);
     }
 }

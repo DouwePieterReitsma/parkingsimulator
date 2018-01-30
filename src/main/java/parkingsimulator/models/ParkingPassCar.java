@@ -1,6 +1,7 @@
 package parkingsimulator.models;
 
 import java.awt.*;
+import java.math.BigDecimal;
 import java.util.Random;
 
 public class ParkingPassCar extends Car
@@ -15,8 +16,8 @@ public class ParkingPassCar extends Car
     }
 
     @Override
-    public double getPrice() {
-        return 0;
+    public BigDecimal getPrice() {
+        return new BigDecimal(0);
     }
 
     public Color getColor(){

@@ -1,19 +1,20 @@
 package parkingsimulator.models;
 
 import java.awt.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public abstract class Car {
+public abstract class Car extends AbstractModel {
 
     private ArrayList<Location> locations;
     private Location location;
     private int minutesLeft;
-    private double priceToPay;
 
     private boolean isDoubleParked;
     private boolean isPaying;
     private boolean hasToPay;
-    private double feePerHour;
+    private BigDecimal feePerHour;
+    private BigDecimal priceToPay;
 
 
     /**
@@ -21,16 +22,16 @@ public abstract class Car {
      */
 
     public Car() {
-        this.feePerHour = 10;
+        feePerHour = new BigDecimal(10.0f);
         locations = new ArrayList<>();
     }
 
 
 
-    public void setIsDoubleParked (boolean b, double fine) {
+    public void setIsDoubleParked (boolean b, BigDecimal fine) {
         if (b && !isDoubleParked){
             isDoubleParked = true;
-            priceToPay += fine;
+            priceToPay.add(fine);
         }else {
             isDoubleParked = false;
         }
@@ -57,7 +58,7 @@ public abstract class Car {
         return locations.get(1);
     }
 
-    public abstract double getPrice();
+    public abstract BigDecimal getPrice();
 
     public Location getLocation() {
         return location;
@@ -91,21 +92,13 @@ public abstract class Car {
         this.hasToPay = hasToPay;
     }
 
-    public void setPriceToPay(double priceToPay) {
-        this.priceToPay = priceToPay;
-    }
-
-    public double getPriceToPay(){
-        return priceToPay;
-    }
-
     public void tick() {
         minutesLeft--;
     }
     
     public abstract Color getColor();
 
-    public double getFeePerHour() {
+    public BigDecimal getFeePerHour() {
         return feePerHour;
     }
 }
