@@ -50,6 +50,7 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
 
         for (int i = 0; i < steps && isRunning; i++)
             tick();
+
     }
 
     public void toggle() {
@@ -59,17 +60,16 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         }
     }
 
-
     private void tick() {
         advanceTime();
         updateViews();
+        getView().getQueueView().updateQueues();
         // Pause.
         try {
             Thread.sleep(tickPause);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         handleEntrance();
         handleExit();
     }

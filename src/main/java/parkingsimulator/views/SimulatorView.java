@@ -20,10 +20,8 @@ public class SimulatorView extends AbstractView implements ActionListener {
     private JPanel buttons;
     private JFrame screen;
 
-
     public SimulatorView(SimulatorController controller, SimulatorViewModel model) {
         this.controller = controller;
-
         this.model = model;
 
         screen=new JFrame("Parking Simulator");
@@ -39,7 +37,6 @@ public class SimulatorView extends AbstractView implements ActionListener {
         stopSimulating = new JButton("Start/ stop");
         stopSimulating.addActionListener(this);
 
-
         buttons = new JPanel(new GridLayout(1,3));
         buttons.add(oneStep);
         buttons.add(hundredSteps);
@@ -50,7 +47,6 @@ public class SimulatorView extends AbstractView implements ActionListener {
         contentPane.add(carParkView);
         contentPane.add(buttons);
         contentPane.add(queueView);
-
 
         screen.pack();
         screen.setVisible(true);
@@ -64,12 +60,15 @@ public class SimulatorView extends AbstractView implements ActionListener {
             if (e.getSource()==oneStep) controller.run(1);
             if (e.getSource()==hundredSteps) controller.run(100);
             if (e.getSource()==stopSimulating) controller.toggle();
-            queueView.queueStats();
         });
         thread.start();
     }
 
     public void updateView() {
         carParkView.updateView();
+    }
+
+    public QueueView getQueueView() {
+        return queueView;
     }
 }
