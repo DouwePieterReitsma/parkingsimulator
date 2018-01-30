@@ -25,6 +25,8 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
     private int paymentSpeed = 7; // number of cars that can pay per minute
     private int exitSpeed = 5; // number of cars that can leave per minute
 
+    private boolean isRunning = true;
+
     public SimulatorController() {
         SimulatorViewModel model = new SimulatorViewModel(3, 3, 30);
         SimulatorView view = new SimulatorView(this, model);
@@ -44,8 +46,15 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
     public void run(int steps) {
         //createRandomReservations(1);
 
-        for (int i = 0; i < steps; i++)
+        for (int i = 0; i < steps && isRunning; i++)
             tick();
+    }
+
+    public void toggle() {
+        isRunning = isRunning ? false : true;
+        if(isRunning) {
+            run(10000);
+        }
     }
 
     private void tick() {
