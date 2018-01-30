@@ -71,6 +71,19 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         handleExit();
     }
 
+    public void tickCars() {
+        for (int floor = 0; floor < this.getModel().getNumberOfFloors(); floor++) {
+            for (int row = 0; row < this.getModel().getNumberOfRows(); row++) {
+                for (int place = 0; place < this.getModel().getNumberOfPlaces(); place++) {
+                    Location location = this.getModel().getLocations()[floor][row][place];
+
+                    if (location.getCar() != null)
+                        location.getCar().tick();
+                }
+            }
+        }
+    }
+
     private void advanceTime() {
         // Advance the time by one minute.
         dateTime.add(Calendar.MINUTE, 1);
@@ -90,7 +103,7 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
     }
 
     private void updateViews() {
-        this.getView().tick();
+        tickCars();
         // Update the car park view.
         this.getView().updateView();
     }
