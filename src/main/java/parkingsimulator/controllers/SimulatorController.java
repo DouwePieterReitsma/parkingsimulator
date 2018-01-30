@@ -126,8 +126,18 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
                 this.getModel().getNumberOfOpenSpots() > 0 &&
                 i < enterSpeed) {
             Car car = queue.removeCar();
+            Location freeLocation = null;
 
-            Location freeLocation = getFirstFreeLocation();
+            if(car instanceof ParkingPassCar) {
+                freeLocation = getFirstFreePassLocation();
+                if(freeLocation == null) {
+                    freeLocation = getFirstFreeLocation();
+                }
+            }
+
+            else {
+                freeLocation = getFirstFreeLocation();
+            }
 
             setCarAt(freeLocation, car);
             i++;
@@ -234,8 +244,21 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
                 for (int place = 0; place < this.getModel().getNumberOfPlaces(); place++) {
                     Location location = this.getModel().getLocations()[floor][row][place];
 
-                    if (location.getCar() == null)
+                    if (location.getCar() == null && !location.isForSubscriber()) {
                         return location;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public Location getFirstFreePassLocation() {
+        for (int floor = 0; floor < this.getModel().getNumberOfFloors(); floor++) {
+            for (int row = 0; row < this.getModel().getNumberOfRows(); row++) {
+                for (int place = 0; place < this.getModel().getNumberOfPlaces(); place++) {
+                    Location location = this.getModel().getLocations()[floor][row][place];
+                    if (location.getCar() == null && location.isForSubscriber()) return location;
                 }
             }
         }

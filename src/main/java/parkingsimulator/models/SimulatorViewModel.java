@@ -15,6 +15,9 @@ public class SimulatorViewModel extends AbstractModel {
     private int numberOfOpenSpots;
     private BigDecimal revenue;
 
+    private int parkingPassLocations = 100; // number of locations reserved for parking pass holders
+    private int parkingPassHolders = 200; // number of parking pass holders
+
     public SimulatorViewModel(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
@@ -25,6 +28,13 @@ public class SimulatorViewModel extends AbstractModel {
 
         locations = new Location[numberOfFloors][numberOfRows][numberOfPlaces];
 
+        int reservePlaces = parkingPassLocations;
+
+        // do not reserve more locations than pass holders
+        if(parkingPassLocations > parkingPassHolders) {
+            reservePlaces = parkingPassHolders;
+        }
+
         for(int floor = 0; floor < numberOfFloors; floor++)
         {
             for(int row = 0; row < numberOfRows; row++)
@@ -32,6 +42,11 @@ public class SimulatorViewModel extends AbstractModel {
                 for (int place = 0; place < numberOfPlaces; place++)
                 {
                     locations[floor][row][place] = new Location(floor, row, place);
+
+                    if(reservePlaces > 0) {
+                        locations[floor][row][place].setForSubscriber(true);
+                        reservePlaces--;
+                    }
                 }
             }
         }
