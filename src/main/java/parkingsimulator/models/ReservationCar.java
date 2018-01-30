@@ -24,8 +24,8 @@ public class ReservationCar extends Car {
     @Override
     public BigDecimal getPrice() {
         BigDecimal extraFee = new BigDecimal(5);
-        BigDecimal feePerMinute = getFeePerHour().divide(new BigDecimal(60));
+        double hours = Math.ceil(stayMinutes / 60.0f);
 
-        return (new BigDecimal(stayMinutes)).multiply(feePerMinute).add(extraFee);
+        return getFeePerHour().multiply(new BigDecimal(hours)).add(extraFee);
     }
 }
