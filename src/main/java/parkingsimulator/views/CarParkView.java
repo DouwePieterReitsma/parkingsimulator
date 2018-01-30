@@ -88,17 +88,4 @@ public class CarParkView extends JPanel
                 width,
                 height);
     }
-
-    public void tick() {
-        for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
-            for (int row = 0; row < model.getNumberOfRows(); row++) {
-                for (int place = 0; place < model.getNumberOfPlaces(); place++) {
-                    Location location = model.getLocations()[floor][row][place];
-
-                    if (location.getCar() != null)
-                        location.getCar().tick();
-                }
-            }
-        }
-    }
 }
