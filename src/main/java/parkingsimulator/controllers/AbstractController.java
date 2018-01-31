@@ -3,8 +3,9 @@ package parkingsimulator.controllers;
 import parkingsimulator.views.AbstractView;
 import parkingsimulator.models.AbstractModel;
 
+import javax.swing.*;
 
-public abstract class AbstractController<TCarParkView extends AbstractView, TModel extends AbstractModel, TQueueView extends AbstractView>
+public abstract class AbstractController<TCarParkView extends AbstractView, TModel extends AbstractModel, TQueueView extends AbstractView> extends JPanel
 {
     private TCarParkView carParkView;
     private TModel model;

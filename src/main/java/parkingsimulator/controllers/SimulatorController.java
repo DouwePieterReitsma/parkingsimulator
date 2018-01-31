@@ -5,12 +5,16 @@ import parkingsimulator.views.CarParkView;
 import parkingsimulator.views.QueueView;
 import parkingsimulator.views.SimulatorView;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-public class SimulatorController extends AbstractController<CarParkView, SimulatorViewModel, QueueView> {
+public class SimulatorController extends AbstractController<CarParkView, SimulatorViewModel, QueueView> implements ActionListener {
     private enum CarType {
         AD_HOC, PASS, RESERVATION
     }
@@ -30,11 +34,15 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
 
     private boolean isRunning = true;
 
+    private JButton oneMinute;
+    private JButton hundredMinutes;
+    private JButton stopSimulating;
+
     public SimulatorController() {
         SimulatorViewModel model = new SimulatorViewModel(3, 6, 28);
         CarParkView carParkView = new CarParkView(model);
         QueueView queueView = new QueueView(model);
-        SimulatorView view = new SimulatorView(carParkView, this, model, queueView);
+        SimulatorView view = new SimulatorView(carParkView, this, queueView);
 
         dateTime = Calendar.getInstance();
         dateTime.set(Calendar.YEAR, 1);
@@ -47,6 +55,28 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         this.setModel(model);
         this.setCarParkView(carParkView);
         this.setQueueView(queueView);
+
+        oneMinute = new JButton("1 minute");
+        oneMinute.addActionListener(this);
+        hundredMinutes = new JButton("100 minutes");
+        hundredMinutes.addActionListener(this);
+        stopSimulating = new JButton("Start/ stop");
+        stopSimulating.addActionListener(this);
+
+        this.setLayout(new GridLayout(1,3));
+        add(oneMinute);
+        add(hundredMinutes);
+        add(stopSimulating);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+        Thread thread = new Thread(() -> {
+            if (e.getSource()==oneMinute) run(1);
+            if (e.getSource()==hundredMinutes) run(100);
+            if (e.getSource()==stopSimulating) toggle();
+        });
+        thread.start();
     }
 
     public void run(int steps) {
