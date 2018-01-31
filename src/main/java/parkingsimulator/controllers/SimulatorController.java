@@ -10,7 +10,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -23,12 +25,12 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
 
     private Calendar dateTime;
 
-    private int tickPause = 1;
+    private int tickPause = 100;
 
-    private int weekDayArrivals = 200; // average number of arriving cars per hour
-    private int weekendArrivals = 400; // average number of arriving cars per hour
-    private int weekDayPassArrivals = 100; // average number of arriving cars per hour
-    private int weekendPassArrivals = 200; // average number of arriving cars per hour
+    private int weekDayArrivals = 100; // average number of arriving cars per hour
+    private int weekendArrivals = 200; // average number of arriving cars per hour
+    private int weekDayPassArrivals = 50; // average number of arriving cars per hour
+    private int weekendPassArrivals = 100; // average number of arriving cars per hour
 
     private int enterSpeed = 3; // number of cars that can enter per minute
     private int paymentSpeed = 7; // number of cars that can pay per minute
@@ -331,7 +333,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
                 for (int place = 0; place < this.getModel().getNumberOfPlaces(); place++) {
                     Location location = this.getModel().getLocations()[floor][row][place];
 
-                    if (location.getCar() == null && !location.isForSubscriber()) {
+                    if (location.getCar() == null && !location.isForSubscriber() && !locationIsReserved(location)) {
                         return location;
                     }
                 }
@@ -449,7 +451,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         return null;
     }
 
-    public void createRandomReservations(int count) {
+    private void createRandomReservations(int count) {
         Random random = new Random();
 
         for (int i = 0; i < count; i++) {
@@ -467,7 +469,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         }
     }
 
-    public int getNumberOfReservationCarsArriving() {
+    private int getNumberOfReservationCarsArriving() {
         int count = 0;
 
         for (Reservation reservation : getModel().getReservations()) {
@@ -483,7 +485,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         return count;
     }
 
-    public Reservation getFirstAvailableReservation(){
+    private Reservation getFirstAvailableReservation(){
         for (Reservation reservation : getModel().getReservations()) {
             if (!dateTime.before(reservation.getBegin())
                     && !dateTime.after(reservation.getEnd())
@@ -495,5 +497,25 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         }
 
         return null;
+    }
+
+    private List<Reservation> getReservationsForLocation(Location location){
+        List<Reservation> result = new ArrayList<>();
+
+        for (Reservation reservation : getModel().getReservations()){
+            if (reservation.getLocation().equals(location))
+                result.add(reservation);
+        }
+
+        return result;
+    }
+
+    private boolean locationIsReserved(Location location){
+        for (Reservation reservation : getReservationsForLocation(location)){
+            if (!dateTime.before(reservation.getBegin()) && !dateTime.after(reservation.getEnd()))
+                return true;
+        }
+
+        return false;
     }
 }
