@@ -22,10 +22,10 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
 
     private int tickPause = 1;
 
-    private int weekDayArrivals = 100; // average number of arriving cars per hour
-    private int weekendArrivals = 200; // average number of arriving cars per hour
-    private int weekDayPassArrivals = 50; // average number of arriving cars per hour
-    private int weekendPassArrivals = 5; // average number of arriving cars per hour
+    private int weekDayArrivals = 200; // average number of arriving cars per hour
+    private int weekendArrivals = 400; // average number of arriving cars per hour
+    private int weekDayPassArrivals = 100; // average number of arriving cars per hour
+    private int weekendPassArrivals = 200; // average number of arriving cars per hour
 
     private int enterSpeed = 3; // number of cars that can enter per minute
     private int paymentSpeed = 7; // number of cars that can pay per minute
@@ -118,6 +118,11 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
     private void advanceTime() {
         // Advance the time by one minute.
         dateTime.add(Calendar.MINUTE, 1);
+
+        // Reset revenues at the end of a week
+        if(dateTime.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY && dateTime.get(Calendar.HOUR_OF_DAY) == 23 && dateTime.get(Calendar.MINUTE) == 59) {
+            this.getModel().resetRevenues();
+        }
     }
 
     private void handleEntrance() {
@@ -137,7 +142,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         tickCars();
         // Update the car park view.
         this.getCarParkView().updateView();
-        this.getQueueView().updateView();
+        this.getStatsView().updateView();
     }
 
     private void carsArriving() {
@@ -198,25 +203,25 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
 
             int dayOfWeek = dateTime.get(Calendar.DAY_OF_WEEK);
 
-            if(dayOfWeek==1) {
+            if(dayOfWeek==2) {
                 this.getModel().addToRevenueMonday(price);
             }
-            if(dayOfWeek==2) {
+            if(dayOfWeek==3) {
                 this.getModel().addToRevenueTuesday(price);
             }
-            if(dayOfWeek==3) {
+            if(dayOfWeek==4) {
                 this.getModel().addToRevenueWednesday(price);
             }
-            if(dayOfWeek==4) {
+            if(dayOfWeek==5) {
                 this.getModel().addToRevenueThursday(price);
             }
-            if(dayOfWeek==5) {
+            if(dayOfWeek==6) {
                 this.getModel().addToRevenueFriday(price);
             }
-            if(dayOfWeek==6) {
+            if(dayOfWeek==7) {
                 this.getModel().addToRevenueSaturday(price);
             }
-            if(dayOfWeek==7) {
+            if(dayOfWeek==1) {
                 this.getModel().addToRevenueSunday(price);
             }
 

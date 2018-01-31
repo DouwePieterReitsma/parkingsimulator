@@ -191,7 +191,14 @@ public class SimulatorViewModel extends AbstractModel {
     public void addToRevenueSunday(BigDecimal price) {
         revenueSunday = revenueSunday.add(price);
     }
-    public void subtractFromRevenue(BigDecimal price){
-        revenue = revenue.subtract(price);
+    public void resetRevenues(){
+        revenue = BigDecimal.ZERO;
+        revenueMonday = BigDecimal.ZERO;
+        revenueTuesday = BigDecimal.ZERO;
+        revenueWednesday = BigDecimal.ZERO;
+        revenueThursday = BigDecimal.ZERO;
+        revenueFriday = BigDecimal.ZERO;
+        revenueSaturday = BigDecimal.ZERO;
+        revenueSunday = BigDecimal.ZERO;
     }
 }
