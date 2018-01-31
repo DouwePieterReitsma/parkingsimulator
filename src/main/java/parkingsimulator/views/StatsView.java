@@ -3,9 +3,12 @@ package parkingsimulator.views;
 import parkingsimulator.models.SimulatorViewModel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class StatsView extends AbstractView {
+    private JPanel panelOne;
+    private JPanel panelTwo;
     private JLabel entranceCarQueue;
     private JLabel entrancePassQueue;
     private JLabel entranceReservationQueue;
@@ -41,6 +44,7 @@ public class StatsView extends AbstractView {
         entranceReservationQueueSize = model.getEntranceReservationQueueSize();
         paymentCarQueueSize = model.getPaymentCarQueueSize();
         exitCarQueueSize = model.getExitCarQueueSize();
+
         entranceCarQueue = new JLabel("Entrance Car queue: ");
         entrancePassQueue = new JLabel("Entrance Pass queue: ");
         entranceReservationQueue = new JLabel("Entrance Reservation queue: ");
@@ -55,20 +59,30 @@ public class StatsView extends AbstractView {
         totalSunday = new JLabel("Sunday: €0.00");
         totalRevenue = new JLabel("Total revenue: €0.00");
 
-        this.setLayout(new FlowLayout());
-        add(entranceCarQueue);
-        add(entrancePassQueue);
-        add(entranceReservationQueue);
-        add(paymentCarQueue);
-        add(exitCarQueue);
-        add(totalMonday);
-        add(totalTuesday);
-        add(totalWednesday);
-        add(totalThursday);
-        add(totalFriday);
-        add(totalSaturday);
-        add(totalSunday);
-        add(totalRevenue);
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
+
+        panelOne = new JPanel(new FlowLayout());
+        panelOne.setBorder(border);
+        panelOne.add(entranceCarQueue);
+        panelOne.add(entrancePassQueue);
+        panelOne.add(entranceReservationQueue);
+        panelOne.add(paymentCarQueue);
+        panelOne.add(exitCarQueue);
+
+        panelTwo = new JPanel(new FlowLayout());
+        panelTwo.setBorder(border);
+        panelTwo.add(totalMonday);
+        panelTwo.add(totalTuesday);
+        panelTwo.add(totalWednesday);
+        panelTwo.add(totalThursday);
+        panelTwo.add(totalFriday);
+        panelTwo.add(totalSaturday);
+        panelTwo.add(totalSunday);
+        panelTwo.add(totalRevenue);
+
+        this.setLayout(new GridLayout(2,1));
+        add(panelOne);
+        add(panelTwo);
     }
 
     public void updateView() {
