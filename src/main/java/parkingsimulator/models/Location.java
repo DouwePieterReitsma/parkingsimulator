@@ -10,7 +10,6 @@ public class Location extends AbstractModel {
     private int place;
     private boolean forSubscriber;
     private Car car;
-    private List<Reservation> reservations;
 
     /**
      * Constructor for objects of class Location
@@ -20,7 +19,6 @@ public class Location extends AbstractModel {
         this.row = row;
         this.place = place;
         this.forSubscriber = false;
-        this.reservations = new ArrayList<>();
     }
 
     /**
@@ -103,12 +101,5 @@ public class Location extends AbstractModel {
      */
     public int getPlace() {
         return place;
-    }
-
-    /**
-     * @return List of reservations for this location
-     */
-    public List<Reservation> getReservations() {
-        return reservations;
     }
 }

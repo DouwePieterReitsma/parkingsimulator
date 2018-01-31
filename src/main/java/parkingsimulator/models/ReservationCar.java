@@ -10,9 +10,6 @@ public class ReservationCar extends Car {
     private int stayMinutes;
 
     public ReservationCar() {
-        Random random = new Random();
-        stayMinutes = (int) (15 * random.nextFloat() * 3 * 60);
-        this.setMinutesLeft(stayMinutes);
         this.setHasToPay(true);
     }
 
@@ -27,5 +24,10 @@ public class ReservationCar extends Car {
         double hours = Math.ceil(stayMinutes / 60.0f);
 
         return getFeePerHour().multiply(new BigDecimal(hours)).add(extraFee);
+    }
+
+    public void setStayMinutes(int minutes){
+        stayMinutes = minutes;
+        this.setMinutesLeft(stayMinutes);
     }
 }

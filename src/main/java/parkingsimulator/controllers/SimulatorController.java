@@ -12,9 +12,12 @@ import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
-public class SimulatorController extends AbstractController<CarParkView, SimulatorViewModel, StatsView> implements ActionListener {
-    private enum CarType {
+public class SimulatorController extends AbstractController<CarParkView, SimulatorViewModel, StatsView> implements ActionListener
+{
+    private enum CarType
+    {
         AD_HOC, PASS, RESERVATION
     }
 
@@ -71,16 +74,16 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
     public void actionPerformed(ActionEvent e) {
 
         Thread thread = new Thread(() -> {
-            if (e.getSource()==oneMinute) run(1);
-            if (e.getSource()==hundredMinutes) run(100);
-            if (e.getSource()==stopSimulating) toggle();
+            if (e.getSource() == oneMinute) run(1);
+            if (e.getSource() == hundredMinutes) run(100);
+            if (e.getSource() == stopSimulating) toggle();
         });
         thread.start();
     }
 
     public void run(int steps) {
         //createRandomReservations(1);
-        if(!isRunning) isRunning=true;
+        if (!isRunning) isRunning = true;
 
         for (int i = 0; i < steps && isRunning; i++)
             tick();
@@ -89,7 +92,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
 
     public void toggle() {
         isRunning = isRunning ? false : true;
-        if(isRunning) {
+        if (isRunning) {
             run(10000);
         }
     }
@@ -103,6 +106,9 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        createRandomReservations((new Random()).nextInt(5));
+
         handleEntrance();
         handleExit();
     }
@@ -151,6 +157,9 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
 
         numberOfCars = getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
         addArrivingCars(numberOfCars, CarType.PASS);
+
+        numberOfCars = getNumberOfReservationCarsArriving();
+        addArrivingCars(numberOfCars, CarType.RESERVATION);
     }
 
     private void carsEntering(CarQueue queue) {
@@ -162,13 +171,19 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
             Car car = queue.removeCar();
             Location freeLocation = null;
 
-            if(car instanceof ParkingPassCar) {
+            if (car instanceof ParkingPassCar) {
                 freeLocation = getFirstFreePassLocation();
-                if(freeLocation == null) {
+                if (freeLocation == null) {
                     freeLocation = getFirstFreeLocation();
                 }
             }
+            else if(car instanceof ReservationCar){
+                freeLocation = car.getLocation();
 
+                if (freeLocation == null){
+                    freeLocation = getFirstFreeLocation();
+                }
+            }
             else {
                 freeLocation = getFirstFreeLocation();
             }
@@ -186,7 +201,8 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
             if (car.getHasToPay()) {
                 car.setIsPaying(true);
                 this.getModel().getPaymentCarQueue().addCar(car);
-            } else {
+            }
+            else {
                 carLeavesSpot(car);
             }
             car = getFirstLeavingCar();
@@ -258,7 +274,20 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
                 break;
             case RESERVATION:
                 for (int i = 0; i < numberOfCars; i++) {
-                    this.getModel().getEntranceCarQueue().addCar(new ReservationCar());
+                    ReservationCar reservationCar = new ReservationCar();
+
+                    Reservation reservation = getFirstAvailableReservation();
+
+                    reservationCar.setLocation(reservation.getLocation());
+
+                    long timeDifferenceInMillis = (reservation.getEnd().getTimeInMillis() - reservation.getBegin().getTimeInMillis());
+                    int stayMinutes = (int)TimeUnit.MILLISECONDS.toMinutes(timeDifferenceInMillis);
+
+                    reservationCar.setStayMinutes(stayMinutes);
+
+                    this.getModel().getEntranceCarQueue().addCar(reservationCar);
+
+                    removeReservation(reservation);
                 }
                 break;
         }
@@ -360,5 +389,87 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         this.getModel().incrementNumberOfOpenSpots();
 
         return car;
+    }
+
+    public void createReservation(Location location, Calendar begin, Calendar end) {
+        getModel().getReservations().add(new Reservation(location, begin, end));
+    }
+
+    public void removeReservation(Reservation reservation) {
+        getModel().getReservations().remove(reservation);
+    }
+
+    public boolean canReserveLocation(Location location, Calendar begin, Calendar end) {
+        Reservation r = new Reservation(location, begin, end);
+
+        for (Reservation reservation : getModel().getReservations())
+            if (reservation.overlapsWith(r))
+                return false;
+
+        return true;
+    }
+
+    public Location findFirstAvailableLocationForReservation(Calendar begin, Calendar end) {
+        for (int floor = 0; floor < getModel().getNumberOfFloors(); floor++) {
+            for (int row = 0; row < getModel().getNumberOfRows(); row++) {
+                for (int place = 0; place < getModel().getNumberOfPlaces(); place++) {
+                    Location location = getModel().getLocations()[floor][row][place];
+
+                    if (canReserveLocation(location, begin, end))
+                        return location;
+                }
+
+            }
+        }
+
+        return null;
+    }
+
+    public void createRandomReservations(int count) {
+        Random random = new Random();
+
+        for (int i = 0; i < count; i++) {
+            Calendar begin = dateTime;
+            begin.add(Calendar.HOUR_OF_DAY, random.nextInt(25));
+
+            Calendar end = (Calendar)begin.clone();
+            end.add(Calendar.MINUTE, random.nextInt(300));
+
+            Location location = findFirstAvailableLocationForReservation(begin, end);
+
+            if (location != null) {
+                createReservation(location, begin, end);
+            }
+        }
+    }
+
+    public int getNumberOfReservationCarsArriving() {
+        int count = 0;
+
+        for (Reservation reservation : getModel().getReservations()) {
+            if (!dateTime.before(reservation.getBegin())
+                    && !dateTime.after(reservation.getEnd())
+                    && reservation.getLocation() != null) {
+                if (reservation.getLocation().getCar() == null){
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    public Reservation getFirstAvailableReservation(){
+        for (Reservation reservation : getModel().getReservations()) {
+            if (!dateTime.before(reservation.getBegin())
+                    && !dateTime.after(reservation.getEnd())
+                    && reservation.getLocation() != null) {
+                if (reservation.getLocation().getCar() == null){
+                    return reservation;
+                }
+            }
+        }
+
+        return null;
     }
 }
