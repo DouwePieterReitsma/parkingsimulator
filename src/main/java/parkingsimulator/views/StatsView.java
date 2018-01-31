@@ -5,11 +5,11 @@ import parkingsimulator.models.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class QueueView extends AbstractView {
+public class StatsView extends AbstractView {
     private JLabel entranceQueue;
     private int entranceQueueSize;
 
-    public QueueView(SimulatorViewModel model) {
+    public StatsView(SimulatorViewModel model) {
         entranceQueueSize = model.getEntranceCarQueueSize();
 
         entranceQueue = new JLabel("Entrance queue: ");

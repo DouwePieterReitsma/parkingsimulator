@@ -8,7 +8,7 @@ public class SimulatorView extends AbstractView {
     private Container contentPane;
     private JFrame screen;
 
-    public SimulatorView(CarParkView carParkView, SimulatorController controller, QueueView queueView) {
+    public SimulatorView(CarParkView carParkView, SimulatorController controller, StatsView statsView) {
         screen=new JFrame("Parking Simulator");
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -16,7 +16,7 @@ public class SimulatorView extends AbstractView {
         contentPane.setLayout(new GridLayout(2,2));
         contentPane.add(carParkView);
         contentPane.add(controller);
-        contentPane.add(queueView);
+        contentPane.add(statsView);
 
         screen.pack();
         screen.setVisible(true);

@@ -5,11 +5,11 @@ import parkingsimulator.models.AbstractModel;
 
 import javax.swing.*;
 
-public abstract class AbstractController<TCarParkView extends AbstractView, TModel extends AbstractModel, TQueueView extends AbstractView> extends JPanel
+public abstract class AbstractController<TCarParkView extends AbstractView, TModel extends AbstractModel, TStatsView extends AbstractView> extends JPanel
 {
     private TCarParkView carParkView;
     private TModel model;
-    private TQueueView queueView;
+    private TStatsView statsView;
 
     public AbstractController(){
 
@@ -23,8 +23,8 @@ public abstract class AbstractController<TCarParkView extends AbstractView, TMod
         return model;
     }
 
-    public TQueueView getQueueView() {
-        return queueView;
+    public TStatsView getQueueView() {
+        return statsView;
     }
 
     public void setCarParkView(TCarParkView carParkView) {
@@ -35,8 +35,8 @@ public abstract class AbstractController<TCarParkView extends AbstractView, TMod
         this.model = model;
     }
 
-    public void setQueueView(TQueueView queueView) {
-        this.queueView = queueView;
+    public void setQueueView(TStatsView statsView) {
+        this.statsView = statsView;
     }
 
     public abstract void run(int steps);

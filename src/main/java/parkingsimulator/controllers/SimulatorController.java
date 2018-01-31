@@ -2,7 +2,7 @@ package parkingsimulator.controllers;
 
 import parkingsimulator.models.*;
 import parkingsimulator.views.CarParkView;
-import parkingsimulator.views.QueueView;
+import parkingsimulator.views.StatsView;
 import parkingsimulator.views.SimulatorView;
 
 import javax.swing.*;
@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-public class SimulatorController extends AbstractController<CarParkView, SimulatorViewModel, QueueView> implements ActionListener {
+public class SimulatorController extends AbstractController<CarParkView, SimulatorViewModel, StatsView> implements ActionListener {
     private enum CarType {
         AD_HOC, PASS, RESERVATION
     }
@@ -41,8 +41,8 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
     public SimulatorController() {
         SimulatorViewModel model = new SimulatorViewModel(3, 6, 28);
         CarParkView carParkView = new CarParkView(model);
-        QueueView queueView = new QueueView(model);
-        SimulatorView view = new SimulatorView(carParkView, this, queueView);
+        StatsView statsView = new StatsView(model);
+        SimulatorView view = new SimulatorView(carParkView, this, statsView);
 
         dateTime = Calendar.getInstance();
         dateTime.set(Calendar.YEAR, 1);
@@ -54,7 +54,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
 
         this.setModel(model);
         this.setCarParkView(carParkView);
-        this.setQueueView(queueView);
+        this.setQueueView(statsView);
 
         oneMinute = new JButton("1 minute");
         oneMinute.addActionListener(this);
