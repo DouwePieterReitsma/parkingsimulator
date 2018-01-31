@@ -13,33 +13,32 @@ public class SimulatorView extends AbstractView implements ActionListener {
     private SimulatorController controller;
     private SimulatorViewModel model;
     private QueueView queueView;
-    private JButton oneStep;
-    private JButton hundredSteps;
+    private JButton oneMinute;
+    private JButton hundredMinutes;
     private JButton stopSimulating;
     private Container contentPane;
     private JPanel buttons;
     private JFrame screen;
 
-    public SimulatorView(SimulatorController controller, SimulatorViewModel model) {
+    public SimulatorView(CarParkView carParkView, SimulatorController controller, SimulatorViewModel model, QueueView queueView) {
+        this.carParkView = carParkView;
         this.controller = controller;
         this.model = model;
+        this.queueView = queueView;
 
         screen=new JFrame("Parking Simulator");
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        carParkView = new CarParkView(model);
-        queueView = new QueueView(model);
-
-        oneStep = new JButton("1 step");
-        oneStep.addActionListener(this);
-        hundredSteps = new JButton("100 steps");
-        hundredSteps.addActionListener(this);
+        oneMinute = new JButton("1 minute");
+        oneMinute.addActionListener(this);
+        hundredMinutes = new JButton("100 minutes");
+        hundredMinutes.addActionListener(this);
         stopSimulating = new JButton("Start/ stop");
         stopSimulating.addActionListener(this);
 
         buttons = new JPanel(new GridLayout(1,3));
-        buttons.add(oneStep);
-        buttons.add(hundredSteps);
+        buttons.add(oneMinute);
+        buttons.add(hundredMinutes);
         buttons.add(stopSimulating);
 
         contentPane = screen.getContentPane();
@@ -50,25 +49,15 @@ public class SimulatorView extends AbstractView implements ActionListener {
 
         screen.pack();
         screen.setVisible(true);
-
-        updateView();
     }
 
     public void actionPerformed(ActionEvent e) {
 
         Thread thread = new Thread(() -> {
-            if (e.getSource()==oneStep) controller.run(1);
-            if (e.getSource()==hundredSteps) controller.run(100);
+            if (e.getSource()==oneMinute) controller.run(1);
+            if (e.getSource()==hundredMinutes) controller.run(100);
             if (e.getSource()==stopSimulating) controller.toggle();
         });
         thread.start();
-    }
-
-    public void updateView() {
-        carParkView.updateView();
-    }
-
-    public QueueView getQueueView() {
-        return queueView;
     }
 }

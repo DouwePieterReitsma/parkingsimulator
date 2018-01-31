@@ -1,6 +1,8 @@
 package parkingsimulator.controllers;
 
 import parkingsimulator.models.*;
+import parkingsimulator.views.CarParkView;
+import parkingsimulator.views.QueueView;
 import parkingsimulator.views.SimulatorView;
 
 import java.math.BigDecimal;
@@ -8,7 +10,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-public class SimulatorController extends AbstractController<SimulatorView, SimulatorViewModel> {
+public class SimulatorController extends AbstractController<CarParkView, SimulatorViewModel, QueueView> {
     private enum CarType {
         AD_HOC, PASS, RESERVATION
     }
@@ -30,7 +32,9 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
 
     public SimulatorController() {
         SimulatorViewModel model = new SimulatorViewModel(3, 6, 28);
-        SimulatorView view = new SimulatorView(this, model);
+        CarParkView carParkView = new CarParkView(model);
+        QueueView queueView = new QueueView(model);
+        SimulatorView view = new SimulatorView(carParkView, this, model, queueView);
 
         dateTime = Calendar.getInstance();
         dateTime.set(Calendar.YEAR, 1);
@@ -41,7 +45,8 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         dateTime.set(Calendar.SECOND, 0);
 
         this.setModel(model);
-        this.setView(view);
+        this.setCarParkView(carParkView);
+        this.setQueueView(queueView);
     }
 
     public void run(int steps) {
@@ -63,7 +68,6 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
     private void tick() {
         advanceTime();
         updateViews();
-        getView().getQueueView().updateQueues();
         // Pause.
         try {
             Thread.sleep(tickPause);
@@ -108,7 +112,8 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
     private void updateViews() {
         tickCars();
         // Update the car park view.
-        this.getView().updateView();
+        this.getCarParkView().updateView();
+        this.getQueueView().updateView();
     }
 
     private void carsArriving() {

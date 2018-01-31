@@ -18,7 +18,7 @@ public class QueueView extends AbstractView {
         add(entranceQueue);
     }
 
-    public void updateQueues() {
+    public void updateView() {
         entranceQueue.setText("Entrance queue: " + String.valueOf(entranceQueueSize));
     }
 }
