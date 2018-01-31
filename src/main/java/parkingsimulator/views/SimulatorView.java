@@ -10,11 +10,13 @@ public class SimulatorView extends AbstractView {
     CarParkView carParkView;
     ButtonsView buttonsView;
     StatsView statsView;
+    PieChartView example;
 
     public SimulatorView(CarParkView carParkView, ButtonsView buttonsView, StatsView statsView) {
         this.carParkView = carParkView;
         this.buttonsView = buttonsView;
         this.statsView = statsView;
+        example = new PieChartView();
 
         screen = new JFrame("Parking Simulator");
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,6 +26,7 @@ public class SimulatorView extends AbstractView {
         contentPane.add(carParkView);
         contentPane.add(buttonsView);
         contentPane.add(statsView);
+        contentPane.add(example);
 
         screen.pack();
         screen.setVisible(true);
