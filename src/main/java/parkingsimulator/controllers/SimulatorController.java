@@ -1,6 +1,7 @@
 package parkingsimulator.controllers;
 
 import parkingsimulator.models.*;
+import parkingsimulator.views.ButtonsView;
 import parkingsimulator.views.CarParkView;
 import parkingsimulator.views.StatsView;
 import parkingsimulator.views.SimulatorView;
@@ -16,10 +17,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class SimulatorController extends AbstractController<CarParkView, SimulatorViewModel, StatsView> implements ActionListener
-{
-    private enum CarType
-    {
+public class SimulatorController extends AbstractController<SimulatorView, SimulatorViewModel> {
+    private enum CarType {
         AD_HOC, PASS, RESERVATION
     }
 
@@ -38,44 +37,20 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
 
     private boolean isRunning = true;
 
-    private JButton oneMinute;
-    private JButton hundredMinutes;
-    private JButton stopSimulating;
-
     public SimulatorController() {
         SimulatorViewModel model = new SimulatorViewModel(3, 6, 28);
+        ButtonsView buttonsView = new ButtonsView(this);
+
         CarParkView carParkView = new CarParkView(model);
         StatsView statsView = new StatsView(model);
-        SimulatorView view = new SimulatorView(carParkView, this, statsView);
+
+        SimulatorView view = new SimulatorView(carParkView, buttonsView, statsView);
 
         dateTime = Calendar.getInstance();
-        dateTime.set(2018,Calendar.JANUARY,1,0,0);
+        dateTime.set(2018, Calendar.JANUARY, 1, 0, 0);
 
         this.setModel(model);
-        this.setCarParkView(carParkView);
-        this.setStatsView(statsView);
-
-        oneMinute = new JButton("1 minute");
-        oneMinute.addActionListener(this);
-        hundredMinutes = new JButton("100 minutes");
-        hundredMinutes.addActionListener(this);
-        stopSimulating = new JButton("Start/ stop");
-        stopSimulating.addActionListener(this);
-
-        this.setLayout(new FlowLayout());
-        add(oneMinute);
-        add(hundredMinutes);
-        add(stopSimulating);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-
-        Thread thread = new Thread(() -> {
-            if (e.getSource() == oneMinute) run(1);
-            if (e.getSource() == hundredMinutes) run(100);
-            if (e.getSource() == stopSimulating) toggle();
-        });
-        thread.start();
+        this.setView(view);
     }
 
     public void run(int steps) {
@@ -88,7 +63,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
     }
 
     public void toggle() {
-        isRunning = isRunning ? false : true;
+        isRunning = !isRunning;
         if (isRunning) {
             run(10000);
         }
@@ -128,7 +103,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         dateTime.add(Calendar.MINUTE, 1);
 
         // Reset revenues at the end of a week
-        if(dateTime.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY && dateTime.get(Calendar.HOUR_OF_DAY) == 23 && dateTime.get(Calendar.MINUTE) == 59) {
+        if (dateTime.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY && dateTime.get(Calendar.HOUR_OF_DAY) == 23 && dateTime.get(Calendar.MINUTE) == 59) {
             this.getModel().resetRevenues();
         }
     }
@@ -149,8 +124,8 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
     private void updateViews() {
         tickCars();
         // Update the car park view.
-        this.getCarParkView().updateView();
-        this.getStatsView().updateView();
+        getView().getCarParkView().updateView();
+        getView().getStatsView().updateView();
     }
 
     private void carsArriving() {
@@ -178,15 +153,13 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
                 if (freeLocation == null) {
                     freeLocation = getFirstFreeLocation();
                 }
-            }
-            else if(car instanceof ReservationCar){
+            } else if (car instanceof ReservationCar) {
                 freeLocation = car.getLocation();
 
-                if (freeLocation == null){
+                if (freeLocation == null) {
                     freeLocation = getFirstFreeLocation();
                 }
-            }
-            else {
+            } else {
                 freeLocation = getFirstFreeLocation();
             }
 
@@ -203,8 +176,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
             if (car.getHasToPay()) {
                 car.setIsPaying(true);
                 this.getModel().getPaymentCarQueue().addCar(car);
-            }
-            else {
+            } else {
                 carLeavesSpot(car);
             }
             car = getFirstLeavingCar();
@@ -216,30 +188,30 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         int i = 0;
         while (this.getModel().getPaymentCarQueue().carsInQueue() > 0 && i < paymentSpeed) {
             Car car = this.getModel().getPaymentCarQueue().removeCar();
-            // TODO Handle payment.
+
             BigDecimal price = car.getPrice();
 
             int dayOfWeek = dateTime.get(Calendar.DAY_OF_WEEK);
 
-            if(dayOfWeek==2) {
+            if (dayOfWeek == 2) {
                 this.getModel().addToRevenueMonday(price);
             }
-            if(dayOfWeek==3) {
+            if (dayOfWeek == 3) {
                 this.getModel().addToRevenueTuesday(price);
             }
-            if(dayOfWeek==4) {
+            if (dayOfWeek == 4) {
                 this.getModel().addToRevenueWednesday(price);
             }
-            if(dayOfWeek==5) {
+            if (dayOfWeek == 5) {
                 this.getModel().addToRevenueThursday(price);
             }
-            if(dayOfWeek==6) {
+            if (dayOfWeek == 6) {
                 this.getModel().addToRevenueFriday(price);
             }
-            if(dayOfWeek==7) {
+            if (dayOfWeek == 7) {
                 this.getModel().addToRevenueSaturday(price);
             }
-            if(dayOfWeek==1) {
+            if (dayOfWeek == 1) {
                 this.getModel().addToRevenueSunday(price);
             }
 
@@ -307,7 +279,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
                     reservationCar.setLocation(reservation.getLocation());
 
                     long timeDifferenceInMillis = (reservation.getEnd().getTimeInMillis() - reservation.getBegin().getTimeInMillis());
-                    int stayMinutes = (int)TimeUnit.MILLISECONDS.toMinutes(timeDifferenceInMillis);
+                    int stayMinutes = (int) TimeUnit.MILLISECONDS.toMinutes(timeDifferenceInMillis);
 
                     reservationCar.setStayMinutes(stayMinutes);
 
@@ -458,7 +430,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
             Calendar begin = dateTime;
             begin.add(Calendar.HOUR_OF_DAY, random.nextInt(25));
 
-            Calendar end = (Calendar)begin.clone();
+            Calendar end = (Calendar) begin.clone();
             end.add(Calendar.MINUTE, random.nextInt(300));
 
             Location location = findFirstAvailableLocationForReservation(begin, end);
@@ -476,7 +448,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
             if (!dateTime.before(reservation.getBegin())
                     && !dateTime.after(reservation.getEnd())
                     && reservation.getLocation() != null) {
-                if (reservation.getLocation().getCar() == null){
+                if (reservation.getLocation().getCar() == null) {
                     count++;
                 }
             }
@@ -485,12 +457,12 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         return count;
     }
 
-    private Reservation getFirstAvailableReservation(){
+    private Reservation getFirstAvailableReservation() {
         for (Reservation reservation : getModel().getReservations()) {
             if (!dateTime.before(reservation.getBegin())
                     && !dateTime.after(reservation.getEnd())
                     && reservation.getLocation() != null) {
-                if (reservation.getLocation().getCar() == null){
+                if (reservation.getLocation().getCar() == null) {
                     return reservation;
                 }
             }
@@ -499,10 +471,10 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         return null;
     }
 
-    private List<Reservation> getReservationsForLocation(Location location){
+    private List<Reservation> getReservationsForLocation(Location location) {
         List<Reservation> result = new ArrayList<>();
 
-        for (Reservation reservation : getModel().getReservations()){
+        for (Reservation reservation : getModel().getReservations()) {
             if (reservation.getLocation().equals(location))
                 result.add(reservation);
         }
@@ -510,8 +482,8 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         return result;
     }
 
-    private boolean locationIsReserved(Location location){
-        for (Reservation reservation : getReservationsForLocation(location)){
+    private boolean locationIsReserved(Location location) {
+        for (Reservation reservation : getReservationsForLocation(location)) {
             if (!dateTime.before(reservation.getBegin()) && !dateTime.after(reservation.getEnd()))
                 return true;
         }
