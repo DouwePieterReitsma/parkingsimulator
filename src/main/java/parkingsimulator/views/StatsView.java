@@ -6,8 +6,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StatsView extends AbstractView {
-    private JLabel entranceQueue;
-    private int entranceQueueSize;
+    private JLabel entranceCarQueue;
+    private JLabel entrancePassQueue;
+    private JLabel entranceReservationQueue;
+    private JLabel paymentCarQueue;
+    private JLabel exitCarQueue;
+    private int entranceCarQueueSize;
+    private int entrancePassQueueSize;
+    private int entranceReservationQueueSize;
+    private int paymentCarQueueSize;
+    private int exitCarQueueSize;
     private JLabel totalMonday;
     private JLabel totalTuesday;
     private JLabel totalWednesday;
@@ -28,8 +36,16 @@ public class StatsView extends AbstractView {
 
     public StatsView(SimulatorViewModel model) {
         this.model = model;
-        entranceQueueSize = model.getEntranceCarQueueSize();
-        entranceQueue = new JLabel("Entrance queue: ");
+        entranceCarQueueSize = model.getEntranceCarQueueSize();
+        entrancePassQueueSize = model.getEntrancePassQueueSize();
+        entranceReservationQueueSize = model.getEntranceReservationQueueSize();
+        paymentCarQueueSize = model.getPaymentCarQueueSize();
+        exitCarQueueSize = model.getExitCarQueueSize();
+        entranceCarQueue = new JLabel("Entrance Car queue: ");
+        entrancePassQueue = new JLabel("Entrance Pass queue: ");
+        entranceReservationQueue = new JLabel("Entrance Reservation queue: ");
+        paymentCarQueue = new JLabel("Payment Car queue: ");
+        exitCarQueue = new JLabel("Exit Car queue: ");
         totalMonday = new JLabel("Monday: €0.00");
         totalTuesday = new JLabel("Tuesday: €0.00");
         totalWednesday = new JLabel("Wednesday: €0.00");
@@ -40,7 +56,11 @@ public class StatsView extends AbstractView {
         totalRevenue = new JLabel("Total revenue: €0.00");
 
         this.setLayout(new FlowLayout());
-        add(entranceQueue);
+        add(entranceCarQueue);
+        add(entrancePassQueue);
+        add(entranceReservationQueue);
+        add(paymentCarQueue);
+        add(exitCarQueue);
         add(totalMonday);
         add(totalTuesday);
         add(totalWednesday);
@@ -52,7 +72,11 @@ public class StatsView extends AbstractView {
     }
 
     public void updateView() {
-        entranceQueue.setText("Entrance queue: " + String.valueOf(entranceQueueSize = model.getEntranceCarQueueSize()));
+        entranceCarQueue.setText("Entrance Car queue: " + String.valueOf(entranceCarQueueSize = model.getEntranceCarQueueSize()));
+        entrancePassQueue.setText("Entrance Pass queue: " + String.valueOf(entrancePassQueueSize = model.getEntrancePassQueueSize()));
+        entranceReservationQueue.setText("Entrance Reservation queue: " + String.valueOf(entranceReservationQueueSize = model.getEntranceReservationQueueSize()));
+        paymentCarQueue.setText("Payment Car queue: " + String.valueOf(paymentCarQueueSize = model.getPaymentCarQueueSize()));
+        exitCarQueue.setText("Exit Car queue: " + String.valueOf(exitCarQueueSize = model.getExitCarQueueSize()));
         totalMonday.setText("Monday: €" + String.valueOf(mondayRevenue = model.getRevenueMonday().doubleValue()));
         totalTuesday.setText("Tuesday: €" + String.valueOf(tuesdayRevenue = model.getRevenueTuesday().doubleValue()));
         totalWednesday.setText("Wednesday: €" + String.valueOf(wednesdayRevenue = model.getRevenueWednesday().doubleValue()));

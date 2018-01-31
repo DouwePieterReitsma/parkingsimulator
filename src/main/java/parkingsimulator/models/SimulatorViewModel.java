@@ -87,12 +87,32 @@ public class SimulatorViewModel extends AbstractModel {
         return entrancePassQueue;
     }
 
+    public int getEntrancePassQueueSize() {
+        return entrancePassQueue.carsInQueue();
+    }
+
+    public CarQueue getEntranceReservationQueue() {
+        return entranceReservationQueue;
+    }
+
+    public int getEntranceReservationQueueSize() {
+        return entranceReservationQueue.carsInQueue();
+    }
+
     public CarQueue getPaymentCarQueue() {
         return paymentCarQueue;
     }
 
+    public int getPaymentCarQueueSize() {
+        return paymentCarQueue.carsInQueue();
+    }
+
     public CarQueue getExitCarQueue() {
         return exitCarQueue;
+    }
+
+    public int getExitCarQueueSize() {
+        return entranceCarQueue.carsInQueue();
     }
 
     public int getNumberOfFloors() {
@@ -122,11 +142,6 @@ public class SimulatorViewModel extends AbstractModel {
     public Location[][][] getLocations() {
         return locations;
     }
-
-    public CarQueue getEntranceReservationQueue() {
-        return entranceReservationQueue;
-    }
-
 
     public BigDecimal getRevenue() {
         return revenue;
