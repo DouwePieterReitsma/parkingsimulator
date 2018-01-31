@@ -14,6 +14,13 @@ public class SimulatorViewModel extends AbstractModel {
     private int numberOfPlaces;
     private int numberOfOpenSpots;
     private BigDecimal revenue;
+    private BigDecimal revenueMonday;
+    private BigDecimal revenueTuesday;
+    private BigDecimal revenueWednesday;
+    private BigDecimal revenueThursday;
+    private BigDecimal revenueFriday;
+    private BigDecimal revenueSaturday;
+    private BigDecimal revenueSunday;
 
     private int parkingPassLocations = 100; // number of locations reserved for parking pass holders
     private int parkingPassHolders = 200; // number of parking pass holders
@@ -118,6 +125,34 @@ public class SimulatorViewModel extends AbstractModel {
 
     public void addToRevenue(BigDecimal price) {
         revenue = revenue.add(price);
+    }
+
+    public void addToRevenueMonday(BigDecimal price) {
+        revenueMonday = revenueMonday.add(price);
+    }
+
+    public void addToRevenueTuesday(BigDecimal price) {
+        revenueTuesday = revenueTuesday.add(price);
+    }
+
+    public void addToRevenueWednesday(BigDecimal price) {
+        revenueWednesday = revenueWednesday.add(price);
+    }
+
+    public void addToRevenueThursday(BigDecimal price) {
+        revenueThursday = revenueThursday.add(price);
+    }
+
+    public void addToRevenueFriday(BigDecimal price) {
+        revenueFriday = revenueFriday.add(price);
+    }
+
+    public void addToRevenueSaturday(BigDecimal price) {
+        revenueSaturday = revenueSaturday.add(price);
+    }
+
+    public void addToRevenueSunday(BigDecimal price) {
+        revenueSunday = revenueSunday.add(price);
     }
 
     public void subtractFromRevenue(BigDecimal price){

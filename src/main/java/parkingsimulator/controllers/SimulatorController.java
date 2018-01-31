@@ -44,16 +44,11 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         SimulatorView view = new SimulatorView(carParkView, this, statsView);
 
         dateTime = Calendar.getInstance();
-        dateTime.set(Calendar.YEAR, 1);
-        dateTime.set(Calendar.MONTH, Calendar.JANUARY);
-        dateTime.set(Calendar.DAY_OF_MONTH, 0);
-        dateTime.set(Calendar.HOUR_OF_DAY, 0);
-        dateTime.set(Calendar.MINUTE, 0);
-        dateTime.set(Calendar.SECOND, 0);
+        dateTime.set(2018,Calendar.JANUARY,1,0,0);
 
         this.setModel(model);
         this.setCarParkView(carParkView);
-        this.setQueueView(statsView);
+        this.setStatsView(statsView);
 
         oneMinute = new JButton("1 minute");
         oneMinute.addActionListener(this);
@@ -200,6 +195,30 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
             Car car = this.getModel().getPaymentCarQueue().removeCar();
             // TODO Handle payment.
             BigDecimal price = car.getPrice();
+
+            int dayOfWeek = dateTime.get(Calendar.DAY_OF_WEEK);
+
+            if(dayOfWeek==1) {
+                this.getModel().addToRevenueMonday(price);
+            }
+            if(dayOfWeek==2) {
+                this.getModel().addToRevenueTuesday(price);
+            }
+            if(dayOfWeek==3) {
+                this.getModel().addToRevenueWednesday(price);
+            }
+            if(dayOfWeek==4) {
+                this.getModel().addToRevenueThursday(price);
+            }
+            if(dayOfWeek==5) {
+                this.getModel().addToRevenueFriday(price);
+            }
+            if(dayOfWeek==6) {
+                this.getModel().addToRevenueSaturday(price);
+            }
+            if(dayOfWeek==7) {
+                this.getModel().addToRevenueSunday(price);
+            }
 
             this.getModel().addToRevenue(price);
 
