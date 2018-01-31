@@ -2,7 +2,6 @@ package parkingsimulator.models;
 
 import java.awt.*;
 import java.math.BigDecimal;
-import java.util.Random;
 
 public class ReservationCar extends Car {
     private static final Color COLOR = Color.getHSBColor(120, 100, 50);
@@ -26,7 +25,7 @@ public class ReservationCar extends Car {
         return getFeePerHour().multiply(new BigDecimal(hours)).add(extraFee);
     }
 
-    public void setStayMinutes(int minutes){
+    public void setStayMinutes(int minutes) {
         stayMinutes = minutes;
         this.setMinutesLeft(stayMinutes);
     }

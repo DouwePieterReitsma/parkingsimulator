@@ -3,15 +3,14 @@ package parkingsimulator.views;
 import parkingsimulator.models.Location;
 import parkingsimulator.models.SimulatorViewModel;
 
-import javax.swing.*;
 import java.awt.*;
 
-public class CarParkView extends AbstractView
-{
+public class CarParkView extends AbstractView {
 
     private Dimension size;
     private Image carParkImage;
     private SimulatorViewModel model;
+
     /**
      * Constructor for objects of class CarPark
      */
@@ -39,8 +38,7 @@ public class CarParkView extends AbstractView
         Dimension currentSize = getSize();
         if (size.equals(currentSize)) {
             g.drawImage(carParkImage, 0, 0, null);
-        }
-        else {
+        } else {
             // Rescale the previous image.
             g.drawImage(carParkImage, 0, 0, currentSize.width, currentSize.height, null);
         }

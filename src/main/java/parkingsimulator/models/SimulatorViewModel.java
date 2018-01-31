@@ -49,20 +49,17 @@ public class SimulatorViewModel extends AbstractModel {
         int reservePlaces = parkingPassLocations;
 
         // do not reserve more locations than pass holders
-        if(parkingPassLocations > parkingPassHolders) {
+        if (parkingPassLocations > parkingPassHolders) {
             reservePlaces = parkingPassHolders;
         }
 
         // reserve the locations for pass holders
-        for(int floor = 0; floor < numberOfFloors; floor++)
-        {
-            for(int row = 0; row < numberOfRows; row++)
-            {
-                for (int place = 0; place < numberOfPlaces; place++)
-                {
+        for (int floor = 0; floor < numberOfFloors; floor++) {
+            for (int row = 0; row < numberOfRows; row++) {
+                for (int place = 0; place < numberOfPlaces; place++) {
                     locations[floor][row][place] = new Location(floor, row, place);
 
-                    if(reservePlaces > 0) {
+                    if (reservePlaces > 0) {
                         locations[floor][row][place].setForSubscriber(true);
                         reservePlaces--;
                     }
@@ -195,7 +192,8 @@ public class SimulatorViewModel extends AbstractModel {
     public void addToRevenueSunday(BigDecimal price) {
         revenueSunday = revenueSunday.add(price);
     }
-    public void resetRevenues(){
+
+    public void resetRevenues() {
         revenue = BigDecimal.ZERO;
         revenueMonday = BigDecimal.ZERO;
         revenueTuesday = BigDecimal.ZERO;

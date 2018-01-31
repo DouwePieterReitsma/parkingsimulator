@@ -9,6 +9,7 @@ public class Reservation extends AbstractModel {
 
     /**
      * This class represents a reservation in the parking garage
+     *
      * @param location
      * @param begin
      * @param end
@@ -31,7 +32,7 @@ public class Reservation extends AbstractModel {
         return location;
     }
 
-    public boolean overlapsWith(Reservation reservation){
+    public boolean overlapsWith(Reservation reservation) {
         if (!location.equals(reservation.location))
             return false;
 

@@ -1,8 +1,5 @@
 package parkingsimulator.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Location extends AbstractModel {
 
     private int floor;
@@ -25,11 +22,10 @@ public class Location extends AbstractModel {
      * Implement content equality.
      */
     public boolean equals(Object obj) {
-        if(obj instanceof Location) {
+        if (obj instanceof Location) {
             Location other = (Location) obj;
             return floor == other.getFloor() && row == other.getRow() && place == other.getPlace();
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -37,35 +33,37 @@ public class Location extends AbstractModel {
     /**
      * @param car
      */
-    public void setCar(Car car){
+    public void setCar(Car car) {
         this.car = car;
     }
 
     /**
      * @return The car that is parked at this location
      */
-    public Car getCar()
-    {
+    public Car getCar() {
         return this.car;
     }
 
 
     /**
      * Get whether or not a location is reserved for subscribers
+     *
      * @return Whether or not a location is reserved for subscribers
      */
     public boolean isForSubscriber() {
         return forSubscriber;
     }
+
     /**
      * Set location for subscriber
      */
-    public void setForSubscriber(boolean forSubscriber){
+    public void setForSubscriber(boolean forSubscriber) {
         this.forSubscriber = forSubscriber;
     }
 
     /**
      * Return a string of the form floor,row,place.
+     *
      * @return A string representation of the location.
      */
     public String toString() {
@@ -76,6 +74,7 @@ public class Location extends AbstractModel {
      * Use the 10 bits for each of the floor, row and place
      * values. Except for very big car parks, this should give
      * a unique hash code for each (floor, row, place) tupel.
+     *
      * @return A hashcode for the location.
      */
     public int hashCode() {

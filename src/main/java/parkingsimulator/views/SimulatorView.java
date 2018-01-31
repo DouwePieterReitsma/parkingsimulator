@@ -16,11 +16,11 @@ public class SimulatorView extends AbstractView {
         this.buttonsView = buttonsView;
         this.statsView = statsView;
 
-        screen=new JFrame("Parking Simulator");
+        screen = new JFrame("Parking Simulator");
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         contentPane = screen.getContentPane();
-        contentPane.setLayout(new GridLayout(2,2));
+        contentPane.setLayout(new GridLayout(2, 2));
         contentPane.add(carParkView);
         contentPane.add(buttonsView);
         contentPane.add(statsView);
@@ -29,15 +29,15 @@ public class SimulatorView extends AbstractView {
         screen.setVisible(true);
     }
 
-    public CarParkView getCarParkView(){
+    public CarParkView getCarParkView() {
         return carParkView;
     }
 
-    public ButtonsView getButtonsView(){
+    public ButtonsView getButtonsView() {
         return buttonsView;
     }
 
-    public StatsView getStatsView(){
+    public StatsView getStatsView() {
         return statsView;
     }
 }

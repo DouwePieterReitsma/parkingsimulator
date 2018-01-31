@@ -3,13 +3,9 @@ package parkingsimulator.controllers;
 import parkingsimulator.models.*;
 import parkingsimulator.views.ButtonsView;
 import parkingsimulator.views.CarParkView;
-import parkingsimulator.views.StatsView;
 import parkingsimulator.views.SimulatorView;
+import parkingsimulator.views.StatsView;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -193,7 +189,7 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
 
             int dayOfWeek = dateTime.get(Calendar.DAY_OF_WEEK);
 
-            switch(dayOfWeek){
+            switch (dayOfWeek) {
                 case Calendar.MONDAY:
                     getModel().addToRevenueMonday(price);
                     break;

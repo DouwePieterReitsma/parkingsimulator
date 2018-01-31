@@ -1,7 +1,7 @@
 package parkingsimulator.views;
 
-import parkingsimulator.models.*;
-import java.math.BigDecimal;
+import parkingsimulator.models.SimulatorViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 

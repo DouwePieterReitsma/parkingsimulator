@@ -14,7 +14,7 @@ public class ButtonsView extends AbstractView implements ActionListener {
 
     private SimulatorController controller;
 
-    public ButtonsView(SimulatorController controller){
+    public ButtonsView(SimulatorController controller) {
         this.controller = controller;
 
         oneMinute = new JButton("1 minute");

@@ -1,16 +1,13 @@
 package parkingsimulator.controllers;
 
-import parkingsimulator.views.AbstractView;
 import parkingsimulator.models.AbstractModel;
+import parkingsimulator.views.AbstractView;
 
-import javax.swing.*;
-
-public abstract class AbstractController<TView extends AbstractView, TModel extends AbstractModel>
-{
+public abstract class AbstractController<TView extends AbstractView, TModel extends AbstractModel> {
     private TView carParkView;
     private TModel model;
 
-    public AbstractController(){
+    public AbstractController() {
 
     }
 
@@ -22,7 +19,7 @@ public abstract class AbstractController<TView extends AbstractView, TModel exte
         this.carParkView = carParkView;
     }
 
-    public TModel getModel(){
+    public TModel getModel() {
         return model;
     }
 

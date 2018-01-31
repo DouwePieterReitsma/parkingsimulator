@@ -27,12 +27,11 @@ public abstract class Car extends AbstractModel {
     }
 
 
-
-    public void setIsDoubleParked (boolean b, BigDecimal fine) {
-        if (b && !isDoubleParked){
+    public void setIsDoubleParked(boolean b, BigDecimal fine) {
+        if (b && !isDoubleParked) {
             isDoubleParked = true;
             priceToPay.add(fine);
-        }else {
+        } else {
             isDoubleParked = false;
         }
     }
@@ -44,6 +43,7 @@ public abstract class Car extends AbstractModel {
 
     /**
      * Gives the primary location of the car.
+     *
      * @return The location.
      */
     public Location getPrimaryLocation() {
@@ -52,6 +52,7 @@ public abstract class Car extends AbstractModel {
 
     /**
      * Gives the secondary location of the car.
+     *
      * @return The location.
      */
     public Location getSecondaryLocation() {
@@ -95,7 +96,7 @@ public abstract class Car extends AbstractModel {
     public void tick() {
         minutesLeft--;
     }
-    
+
     public abstract Color getColor();
 
     public BigDecimal getFeePerHour() {
