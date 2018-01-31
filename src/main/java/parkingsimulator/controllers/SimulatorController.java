@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Random;
 
 public class SimulatorController extends AbstractController<CarParkView, SimulatorViewModel, StatsView> implements ActionListener {
@@ -63,7 +62,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
         stopSimulating = new JButton("Start/ stop");
         stopSimulating.addActionListener(this);
 
-        this.setLayout(new GridLayout(1,3));
+        this.setLayout(new FlowLayout());
         add(oneMinute);
         add(hundredMinutes);
         add(stopSimulating);

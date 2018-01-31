@@ -16,6 +16,6 @@ public class Simulator {
      */
     public Simulator() {
         simulatorController = new SimulatorController();
-        simulatorController.run(1000000);
+        simulatorController.run(1);
     }
 }
