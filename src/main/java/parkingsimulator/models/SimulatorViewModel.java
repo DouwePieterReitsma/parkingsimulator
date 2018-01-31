@@ -17,6 +17,13 @@ public class SimulatorViewModel extends AbstractModel {
     private int numberOfPlaces;
     private int numberOfOpenSpots;
     private BigDecimal revenue;
+    private BigDecimal revenueMonday;
+    private BigDecimal revenueTuesday;
+    private BigDecimal revenueWednesday;
+    private BigDecimal revenueThursday;
+    private BigDecimal revenueFriday;
+    private BigDecimal revenueSaturday;
+    private BigDecimal revenueSunday;
 
     private int parkingPassLocations = 100; // number of locations reserved for parking pass holders
     private int parkingPassHolders = 200; // number of parking pass holders
@@ -28,6 +35,13 @@ public class SimulatorViewModel extends AbstractModel {
         this.numberOfOpenSpots = numberOfFloors * numberOfRows * numberOfPlaces;
 
         revenue = new BigDecimal(0);
+        revenueMonday = new BigDecimal(0);
+        revenueTuesday = new BigDecimal(0);
+        revenueWednesday = new BigDecimal(0);
+        revenueThursday = new BigDecimal(0);
+        revenueFriday = new BigDecimal(0);
+        revenueSaturday = new BigDecimal(0);
+        revenueSunday = new BigDecimal(0);
 
         locations = new Location[numberOfFloors][numberOfRows][numberOfPlaces];
         reservations = new ArrayList<>();
@@ -116,16 +130,80 @@ public class SimulatorViewModel extends AbstractModel {
         return entranceReservationQueue;
     }
 
+
     public BigDecimal getRevenue() {
         return revenue;
     }
+
+    public BigDecimal getRevenueMonday() {
+        return revenueMonday;
+    }
+
+    public BigDecimal getRevenueTuesday() {
+        return revenueTuesday;
+    }
+
+    public BigDecimal getRevenueWednesday() {
+        return revenueWednesday;
+    }
+
+    public BigDecimal getRevenueThursday() {
+        return revenueThursday;
+    }
+
+    public BigDecimal getRevenueFriday() {
+        return revenueFriday;
+    }
+
+    public BigDecimal getRevenueSaturday() {
+        return revenueSaturday;
+    }
+
+    public BigDecimal getRevenueSunday() {
+        return revenueSunday;
+    }
+
 
     public void addToRevenue(BigDecimal price) {
         revenue = revenue.add(price);
     }
 
-    public void subtractFromRevenue(BigDecimal price){
-        revenue = revenue.subtract(price);
+    public void addToRevenueMonday(BigDecimal price) {
+        revenueMonday = revenueMonday.add(price);
+    }
+
+    public void addToRevenueTuesday(BigDecimal price) {
+        revenueTuesday = revenueTuesday.add(price);
+    }
+
+    public void addToRevenueWednesday(BigDecimal price) {
+        revenueWednesday = revenueWednesday.add(price);
+    }
+
+    public void addToRevenueThursday(BigDecimal price) {
+        revenueThursday = revenueThursday.add(price);
+    }
+
+    public void addToRevenueFriday(BigDecimal price) {
+        revenueFriday = revenueFriday.add(price);
+    }
+
+    public void addToRevenueSaturday(BigDecimal price) {
+        revenueSaturday = revenueSaturday.add(price);
+    }
+
+    public void addToRevenueSunday(BigDecimal price) {
+        revenueSunday = revenueSunday.add(price);
+    }
+    public void resetRevenues(){
+        revenue = BigDecimal.ZERO;
+        revenueMonday = BigDecimal.ZERO;
+        revenueTuesday = BigDecimal.ZERO;
+        revenueWednesday = BigDecimal.ZERO;
+        revenueThursday = BigDecimal.ZERO;
+        revenueFriday = BigDecimal.ZERO;
+        revenueSaturday = BigDecimal.ZERO;
+        revenueSunday = BigDecimal.ZERO;
     }
 
     public List<Reservation> getReservations() {

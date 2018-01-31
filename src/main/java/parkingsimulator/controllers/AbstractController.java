@@ -23,7 +23,7 @@ public abstract class AbstractController<TCarParkView extends AbstractView, TMod
         return model;
     }
 
-    public TStatsView getQueueView() {
+    public TStatsView getStatsView() {
         return statsView;
     }
 
@@ -35,7 +35,7 @@ public abstract class AbstractController<TCarParkView extends AbstractView, TMod
         this.model = model;
     }
 
-    public void setQueueView(TStatsView statsView) {
+    public void setStatsView(TStatsView statsView) {
         this.statsView = statsView;
     }
 
