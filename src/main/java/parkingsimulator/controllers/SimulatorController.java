@@ -20,7 +20,7 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
 
     private Calendar dateTime;
 
-    private int tickPause = 100;
+    private int tickPause = 1;
 
     private int weekDayArrivals = 100; // average number of arriving cars per hour
     private int weekendArrivals = 200; // average number of arriving cars per hour
@@ -196,8 +196,29 @@ public class SimulatorController extends AbstractController<CarParkView, Simulat
             // TODO Handle payment.
             BigDecimal price = car.getPrice();
 
+            int dayOfWeek = dateTime.get(Calendar.DAY_OF_WEEK);
 
-
+            if(dayOfWeek==1) {
+                this.getModel().addToRevenueMonday(price);
+            }
+            if(dayOfWeek==2) {
+                this.getModel().addToRevenueTuesday(price);
+            }
+            if(dayOfWeek==3) {
+                this.getModel().addToRevenueWednesday(price);
+            }
+            if(dayOfWeek==4) {
+                this.getModel().addToRevenueThursday(price);
+            }
+            if(dayOfWeek==5) {
+                this.getModel().addToRevenueFriday(price);
+            }
+            if(dayOfWeek==6) {
+                this.getModel().addToRevenueSaturday(price);
+            }
+            if(dayOfWeek==7) {
+                this.getModel().addToRevenueSunday(price);
+            }
 
             this.getModel().addToRevenue(price);
 
