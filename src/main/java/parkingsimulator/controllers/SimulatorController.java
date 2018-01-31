@@ -193,26 +193,29 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
 
             int dayOfWeek = dateTime.get(Calendar.DAY_OF_WEEK);
 
-            if (dayOfWeek == 2) {
-                this.getModel().addToRevenueMonday(price);
-            }
-            if (dayOfWeek == 3) {
-                this.getModel().addToRevenueTuesday(price);
-            }
-            if (dayOfWeek == 4) {
-                this.getModel().addToRevenueWednesday(price);
-            }
-            if (dayOfWeek == 5) {
-                this.getModel().addToRevenueThursday(price);
-            }
-            if (dayOfWeek == 6) {
-                this.getModel().addToRevenueFriday(price);
-            }
-            if (dayOfWeek == 7) {
-                this.getModel().addToRevenueSaturday(price);
-            }
-            if (dayOfWeek == 1) {
-                this.getModel().addToRevenueSunday(price);
+            switch(dayOfWeek){
+                case Calendar.MONDAY:
+                    getModel().addToRevenueMonday(price);
+                    break;
+                case Calendar.TUESDAY:
+                    getModel().addToRevenueTuesday(price);
+                    break;
+                case Calendar.WEDNESDAY:
+                    getModel().addToRevenueWednesday(price);
+                    break;
+                case Calendar.THURSDAY:
+                    getModel().addToRevenueThursday(price);
+                    break;
+                case Calendar.FRIDAY:
+                    getModel().addToRevenueFriday(price);
+                    break;
+                case Calendar.SATURDAY:
+                    getModel().addToRevenueSaturday(price);
+                    break;
+                case Calendar.SUNDAY:
+                    getModel().addToRevenueSunday(price);
+                    break;
+
             }
 
             this.getModel().addToRevenue(price);
