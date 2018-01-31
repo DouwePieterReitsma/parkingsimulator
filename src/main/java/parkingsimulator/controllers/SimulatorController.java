@@ -31,7 +31,7 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
     private int paymentSpeed = 7; // number of cars that can pay per minute
     private int exitSpeed = 5; // number of cars that can leave per minute
 
-    private boolean isRunning = true;
+    private boolean isRunning = false;
 
     public SimulatorController() {
         SimulatorViewModel model = new SimulatorViewModel(3, 6, 28);
@@ -50,7 +50,6 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
     }
 
     public void run(int steps) {
-        //createRandomReservations(1);
         if (!isRunning) isRunning = true;
 
         for (int i = 0; i < steps && isRunning; i++)
@@ -60,8 +59,9 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
 
     public void toggle() {
         isRunning = !isRunning;
-        if (isRunning) {
-            run(10000);
+
+        while(isRunning){
+            run(1);
         }
     }
 
@@ -426,7 +426,7 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         Random random = new Random();
 
         for (int i = 0; i < count; i++) {
-            Calendar begin = dateTime;
+            Calendar begin = (Calendar) dateTime.clone();
             begin.add(Calendar.HOUR_OF_DAY, random.nextInt(25));
 
             Calendar end = (Calendar) begin.clone();

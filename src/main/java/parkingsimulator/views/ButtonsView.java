@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class ButtonsView extends AbstractView implements ActionListener {
     private JButton oneMinute;
     private JButton hundredMinutes;
-    private JButton stopSimulating;
+    private JButton toggleSimulation;
 
     private SimulatorController controller;
 
@@ -21,13 +21,13 @@ public class ButtonsView extends AbstractView implements ActionListener {
         oneMinute.addActionListener(this);
         hundredMinutes = new JButton("100 minutes");
         hundredMinutes.addActionListener(this);
-        stopSimulating = new JButton("Start/ stop");
-        stopSimulating.addActionListener(this);
+        toggleSimulation = new JButton("Start/ stop");
+        toggleSimulation.addActionListener(this);
 
         this.setLayout(new FlowLayout());
         this.add(oneMinute);
         this.add(hundredMinutes);
-        this.add(stopSimulating);
+        this.add(toggleSimulation);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ButtonsView extends AbstractView implements ActionListener {
         Thread thread = new Thread(() -> {
             if (e.getSource() == oneMinute) controller.run(1);
             if (e.getSource() == hundredMinutes) controller.run(100);
-            if (e.getSource() == stopSimulating) controller.toggle();
+            if (e.getSource() == toggleSimulation) controller.toggle();
         });
 
         thread.start();
