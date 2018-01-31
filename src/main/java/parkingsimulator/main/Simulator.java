@@ -9,13 +9,12 @@ import parkingsimulator.controllers.*;
  */
 
 public class Simulator {
-    private AbstractController simulatorController;
 
     /**
      * Constructor for the Simulator.
      */
     public Simulator() {
-        simulatorController = new SimulatorController();
+        SimulatorController simulatorController = new SimulatorController();
         simulatorController.run(1);
     }
 }
