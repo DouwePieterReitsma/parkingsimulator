@@ -17,7 +17,7 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
 
     private Calendar dateTime;
 
-    private int tickPause = 10;
+    private int tickPause = 128;
 
     private int weekDayArrivals = 100; // average number of arriving cars per hour
     private int weekendArrivals = 200; // average number of arriving cars per hour
@@ -171,6 +171,19 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
 
     public int getCarsNotEntering() {
         return carsNotEntering;
+    }
+
+    public int getTickPause() {
+        return tickPause;
+    }
+
+    public void setTickPause(int a) {
+        if(a == 1){
+            tickPause = tickPause * 2;
+        }
+        if(a == 2){
+            tickPause = tickPause / 2;
+        }
     }
 
     private void carsReadyToLeave() {

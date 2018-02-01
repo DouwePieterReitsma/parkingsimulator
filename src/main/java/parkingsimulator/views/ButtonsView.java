@@ -11,7 +11,9 @@ public class ButtonsView extends AbstractView implements ActionListener {
     private JButton oneMinute;
     private JButton hundredMinutes;
     private JButton toggleSimulation;
-
+    private JButton slowerSimulation;
+    private JButton fasterSimulation;
+    private JLabel tickPause;
     private SimulatorController controller;
 
     public ButtonsView(SimulatorController controller) {
@@ -23,11 +25,19 @@ public class ButtonsView extends AbstractView implements ActionListener {
         hundredMinutes.addActionListener(this);
         toggleSimulation = new JButton("Start/ stop");
         toggleSimulation.addActionListener(this);
+        slowerSimulation = new JButton("Speed /2");
+        slowerSimulation.addActionListener(this);
+        fasterSimulation = new JButton("Speed x2");
+        fasterSimulation.addActionListener(this);
+        tickPause = new JLabel("Tick pause " + controller.getTickPause());
 
         this.setLayout(new FlowLayout());
         this.add(oneMinute);
         this.add(hundredMinutes);
         this.add(toggleSimulation);
+        this.add(slowerSimulation);
+        this.add(fasterSimulation);
+        this.add(tickPause);
     }
 
     @Override
@@ -36,6 +46,14 @@ public class ButtonsView extends AbstractView implements ActionListener {
             if (e.getSource() == oneMinute) controller.run(1);
             if (e.getSource() == hundredMinutes) controller.run(100);
             if (e.getSource() == toggleSimulation) controller.toggle();
+            if (e.getSource() == slowerSimulation) {
+                controller.setTickPause(1);
+                tickPause.setText("Tick pause " + controller.getTickPause());
+            }
+            if (e.getSource() == fasterSimulation) {
+                controller.setTickPause(2);
+                tickPause.setText("Tick pause " + controller.getTickPause());
+            }
         });
 
         thread.start();
