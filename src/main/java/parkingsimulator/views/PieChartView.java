@@ -14,9 +14,16 @@ import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
+import parkingsimulator.models.SimulatorViewModel;
 
 public class PieChartView extends AbstractView {
-    public PieChartView() {
+    private SimulatorViewModel model;
+    int a = 1;
+    int b = 5;
+    int c = 8;
+
+    public PieChartView(SimulatorViewModel model) {
+        this.model = model;
         this.setSize(800,400);
         this.setVisible(true);
 
@@ -33,7 +40,7 @@ public class PieChartView extends AbstractView {
 
         //Format Label
         PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator(
-                "Marks {0} : ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
+                "Car type {0} : ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
         ((PiePlot) chart.getPlot()).setLabelGenerator(labelGenerator);
 
         // Create Panel
@@ -41,14 +48,19 @@ public class PieChartView extends AbstractView {
         add(panel);
     }
 
-    private PieDataset createDataset() {
+    public PieDataset createDataset() {
 
         DefaultPieDataset dataset=new DefaultPieDataset();
-        dataset.setValue("80-100", 120);
-        dataset.setValue("60-79", 80);
-        dataset.setValue("40-59", 20);
-        dataset.setValue("20-39", 7);
-        dataset.setValue("0-19", 3);
+        dataset.setValue("AdHoc", a);
+        dataset.setValue("ParkingPass", b);
+        dataset.setValue("Reservation", c);
         return dataset;
     }
+
+    public void updateView() {
+
+
+    }
+
+
 }

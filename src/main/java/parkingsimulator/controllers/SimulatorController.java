@@ -1,10 +1,7 @@
 package parkingsimulator.controllers;
 
 import parkingsimulator.models.*;
-import parkingsimulator.views.ButtonsView;
-import parkingsimulator.views.CarParkView;
-import parkingsimulator.views.SimulatorView;
-import parkingsimulator.views.StatsView;
+import parkingsimulator.views.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -39,8 +36,9 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
 
         CarParkView carParkView = new CarParkView(model);
         StatsView statsView = new StatsView(model);
+        PieChartView pieChartView = new PieChartView(model);
 
-        SimulatorView view = new SimulatorView(carParkView, buttonsView, statsView);
+        SimulatorView view = new SimulatorView(carParkView, buttonsView, statsView, pieChartView);
 
         dateTime = Calendar.getInstance();
         dateTime.set(2018, Calendar.JANUARY, 1, 0, 0);
@@ -122,6 +120,7 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         // Update the car park view.
         getView().getCarParkView().updateView();
         getView().getStatsView().updateView();
+        getView().getPieChartView().updateView();
     }
 
     private void carsArriving() {
