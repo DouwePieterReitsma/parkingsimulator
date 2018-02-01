@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"parkingsimulator.controllers"},{"l":"parkingsimulator.main"},{"l":"parkingsimulator.models"},{"l":"parkingsimulator.runner"},{"l":"parkingsimulator.views"}]

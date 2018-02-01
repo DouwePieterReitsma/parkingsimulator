@@ -1,5 +1,6 @@
 package parkingsimulator.views;
 
+import java.awt.*;
 import java.text.DecimalFormat;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -31,7 +32,6 @@ public class PieChartView extends AbstractView {
                 true,
                 true,
                 false);
-
         //Format Label
         PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator(
                 "Car type {0} : ({2})", new DecimalFormat("0"), new DecimalFormat("0.00%"));

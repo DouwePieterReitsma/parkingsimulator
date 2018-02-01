@@ -47,6 +47,9 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         this.setView(view);
     }
 
+    /**
+     * @param steps
+     */
     public void run(int steps) {
         if (!isRunning) isRunning = true;
 
@@ -134,6 +137,9 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         addArrivingCars(numberOfCars, CarType.RESERVATION);
     }
 
+    /**
+     * @param queue
+     */
     private void carsEntering(CarQueue queue) {
         int i = 0;
         // Remove car from the front of the queue and assign to a parking space.
@@ -363,6 +369,10 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         return null;
     }
 
+    /**
+     * @param location
+     * @return
+     */
     private boolean locationIsValid(Location location) {
         int floor = location.getFloor();
         int row = location.getRow();
@@ -375,6 +385,11 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         return true;
     }
 
+    /**
+     * @param location the location to place the car at
+     * @param car the car to place
+     * @return
+     */
     public boolean setCarAt(Location location, Car car) {
         if (!locationIsValid(location)) {
             return false;
@@ -393,6 +408,10 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         return false;
     }
 
+    /**
+     * @param location
+     * @return
+     */
     public Car removeCarAt(Location location) {
         if (!locationIsValid(location)) {
             return null;
@@ -412,14 +431,28 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         return car;
     }
 
+    /**
+     * @param location
+     * @param begin
+     * @param end
+     */
     public void createReservation(Location location, Calendar begin, Calendar end) {
         getModel().getReservations().add(new Reservation(location, begin, end));
     }
 
+    /**
+     * @param reservation
+     */
     public void removeReservation(Reservation reservation) {
         getModel().getReservations().remove(reservation);
     }
 
+    /**
+     * @param location
+     * @param begin
+     * @param end
+     * @return
+     */
     public boolean canReserveLocation(Location location, Calendar begin, Calendar end) {
         Reservation r = new Reservation(location, begin, end);
 
@@ -430,6 +463,11 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         return true;
     }
 
+    /**
+     * @param begin
+     * @param end
+     * @return
+     */
     public Location findFirstAvailableLocationForReservation(Calendar begin, Calendar end) {
         for (int floor = 0; floor < getModel().getNumberOfFloors(); floor++) {
             for (int row = 0; row < getModel().getNumberOfRows(); row++) {
@@ -446,6 +484,9 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         return null;
     }
 
+    /**
+     * @param count
+     */
     private void createRandomReservations(int count) {
         Random random = new Random();
 
@@ -494,6 +535,10 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         return null;
     }
 
+    /**
+     * @param location
+     * @return
+     */
     private List<Reservation> getReservationsForLocation(Location location) {
         List<Reservation> result = new ArrayList<>();
 
@@ -505,6 +550,10 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
         return result;
     }
 
+    /**
+     * @param location
+     * @return
+     */
     private boolean locationIsReserved(Location location) {
         for (Reservation reservation : getReservationsForLocation(location)) {
             if (!dateTime.before(reservation.getBegin()) && !dateTime.after(reservation.getEnd()))
