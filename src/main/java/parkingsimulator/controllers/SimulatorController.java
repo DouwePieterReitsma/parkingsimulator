@@ -73,7 +73,7 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
             e.printStackTrace();
         }
 
-        createRandomReservations((new Random()).nextInt(5));
+        createRandomReservations((new Random()).nextInt(250));
 
         handleEntrance();
         handleExit();
