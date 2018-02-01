@@ -18,6 +18,8 @@ import parkingsimulator.models.SimulatorViewModel;
 
 public class PieChartView extends AbstractView {
     private SimulatorViewModel model;
+    private DefaultPieDataset dataset;
+    private JFreeChart chart;
     int a = 1;
     int b = 5;
     int c = 8;
@@ -28,10 +30,11 @@ public class PieChartView extends AbstractView {
         this.setVisible(true);
 
         // Create dataset
-        PieDataset dataset = createDataset();
+        dataset = new DefaultPieDataset();
+        dataset = createDataset();
 
         // Create chart
-        JFreeChart chart = ChartFactory.createPieChart(
+        chart = ChartFactory.createPieChart(
                 "Cars parked in garage",
                 dataset,
                 true,
@@ -48,9 +51,8 @@ public class PieChartView extends AbstractView {
         add(panel);
     }
 
-    public PieDataset createDataset() {
+    public DefaultPieDataset createDataset() {
 
-        DefaultPieDataset dataset=new DefaultPieDataset();
         dataset.setValue("AdHoc", a);
         dataset.setValue("ParkingPass", b);
         dataset.setValue("Reservation", c);
@@ -58,7 +60,13 @@ public class PieChartView extends AbstractView {
     }
 
     public void updateView() {
-
+        a++;
+        b++;
+        c++;
+        dataset.setValue("AdHoc", a);
+        dataset.setValue("ParkingPass", b);
+        dataset.setValue("Reservation", c);
+        // chart.getPlot().
 
     }
 
