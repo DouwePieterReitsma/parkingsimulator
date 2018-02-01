@@ -61,7 +61,7 @@ public class StatsView extends AbstractView {
 
         Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
 
-        panelOne = new JPanel(new FlowLayout());
+        panelOne = new JPanel(new GridLayout(5,1));
         panelOne.setBorder(border);
         panelOne.add(entranceCarQueue);
         panelOne.add(entrancePassQueue);
@@ -69,7 +69,7 @@ public class StatsView extends AbstractView {
         panelOne.add(paymentCarQueue);
         panelOne.add(exitCarQueue);
 
-        panelTwo = new JPanel(new FlowLayout());
+        panelTwo = new JPanel(new GridLayout(8,1));
         panelTwo.setBorder(border);
         panelTwo.add(totalMonday);
         panelTwo.add(totalTuesday);
@@ -80,7 +80,7 @@ public class StatsView extends AbstractView {
         panelTwo.add(totalSunday);
         panelTwo.add(totalRevenue);
 
-        this.setLayout(new GridLayout(2,1));
+        this.setLayout(new GridLayout(1,2));
         add(panelOne);
         add(panelTwo);
     }
