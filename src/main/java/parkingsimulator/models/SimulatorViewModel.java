@@ -112,7 +112,7 @@ public class SimulatorViewModel extends AbstractModel {
     }
 
     public int getExitCarQueueSize() {
-        return entranceCarQueue.carsInQueue();
+        return exitCarQueue.carsInQueue();
     }
 
     public int getNumberOfFloors() {

@@ -17,27 +17,27 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
 
     private Calendar dateTime;
 
-    private int tickPause = 100;
+    private int tickPause = 10;
 
     private int weekDayArrivals = 100; // average number of arriving cars per hour
     private int weekendArrivals = 200; // average number of arriving cars per hour
-    private int weekDayPassArrivals = 50; // average number of arriving cars per hour
+    private int weekDayPassArrivals = 75; // average number of arriving cars per hour
     private int weekendPassArrivals = 100; // average number of arriving cars per hour
 
     private int enterSpeed = 3; // number of cars that can enter per minute
-    private int paymentSpeed = 7; // number of cars that can pay per minute
-    private int exitSpeed = 5; // number of cars that can leave per minute
+    private int paymentSpeed = 4; // number of cars that can pay per minute
+    private int exitSpeed = 3; // number of cars that can leave per minute
+
+    private int carsNotEntering = 0; // number of cars not entering because of long queue
 
     private boolean isRunning = false;
 
     public SimulatorController() {
         SimulatorViewModel model = new SimulatorViewModel(3, 6, 28);
         ButtonsView buttonsView = new ButtonsView(this);
-
         CarParkView carParkView = new CarParkView(model);
-        StatsView statsView = new StatsView(model);
+        StatsView statsView = new StatsView(model,this);
         PieChartView pieChartView = new PieChartView(model);
-
         SimulatorView view = new SimulatorView(carParkView, buttonsView, statsView, pieChartView);
 
         dateTime = Calendar.getInstance();
@@ -137,30 +137,40 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
     private void carsEntering(CarQueue queue) {
         int i = 0;
         // Remove car from the front of the queue and assign to a parking space.
-        while (queue.carsInQueue() > 0 &&
-                this.getModel().getNumberOfOpenSpots() > 0 &&
-                i < enterSpeed) {
-            Car car = queue.removeCar();
-            Location freeLocation = null;
+        // if(queue.carsInQueue() > 10) {
+        //    queue.removeCar();
+        //    carsNotEntering++;
+        // } else {
 
-            if (car instanceof ParkingPassCar) {
-                freeLocation = getFirstFreePassLocation();
-                if (freeLocation == null) {
+            while (queue.carsInQueue() > 0 &&
+                    this.getModel().getNumberOfOpenSpots() > 0 &&
+                    i < enterSpeed) {
+                Car car = queue.removeCar();
+                Location freeLocation = null;
+
+                if (car instanceof ParkingPassCar) {
+                    freeLocation = getFirstFreePassLocation();
+                    if (freeLocation == null) {
+                        freeLocation = getFirstFreeLocation();
+                    }
+                } else if (car instanceof ReservationCar) {
+                    freeLocation = car.getLocation();
+
+                    if (freeLocation == null) {
+                        freeLocation = getFirstFreeLocation();
+                    }
+                } else {
                     freeLocation = getFirstFreeLocation();
                 }
-            } else if (car instanceof ReservationCar) {
-                freeLocation = car.getLocation();
 
-                if (freeLocation == null) {
-                    freeLocation = getFirstFreeLocation();
-                }
-            } else {
-                freeLocation = getFirstFreeLocation();
+                setCarAt(freeLocation, car);
+                i++;
             }
+        // }
+    }
 
-            setCarAt(freeLocation, car);
-            i++;
-        }
+    public int getCarsNotEntering() {
+        return carsNotEntering;
     }
 
     private void carsReadyToLeave() {
