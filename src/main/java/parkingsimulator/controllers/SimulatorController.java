@@ -182,7 +182,9 @@ public class SimulatorController extends AbstractController<SimulatorView, Simul
             tickPause = tickPause * 2;
         }
         if(a == 2){
-            tickPause = tickPause / 2;
+            if(tickPause > 1) {
+                tickPause = tickPause / 2;
+            }
         }
     }
 
